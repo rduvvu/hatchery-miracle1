@@ -12,30 +12,73 @@
   <form (submit)="registerDriver()" class="space-y-4">
     <div>
       <label class="block text-sm font-medium text-gray-700">Full Name *</label>
-      <input type="text" [(ngModel)]="driver.fullName" name="fullName" required
+      <input type="text" [(ngModel)]="driver.fullName" name="fullName"  #fullName="ngModel" required minlength="3"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
-    </div>
+        <p *ngIf="fullName.invalid && fullName.touched" class="text-red-600 text-xs">
+      Full name is required (min 3 characters).
+    </p>
+      </div>
 
     <div>
       <label class="block text-sm font-medium text-gray-700">Owner Name *</label>
-      <input type="email" [(ngModel)]="driver.ownerName" name="ownerName" required
-        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+      <input
+      type="email"
+      name="ownerName"
+      [(ngModel)]="driver.ownerName"
+      #ownerName="ngModel"
+      required
+      minlength="3"
+      class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+    />
+    <p *ngIf="ownerName.invalid && ownerName.touched" class="text-red-600 text-xs">
+      Owner name is required (min 3 characters).
+    </p>
     </div>
 
     <div>
       <label class="block text-sm font-medium text-gray-700">Driver Phone Number *</label>
-      <input type="tel" [(ngModel)]="driver.phone" name="phone" required
-        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
-    </div>
+       <input
+      type="tel"
+      name="phone"
+      [(ngModel)]="driver.phone"
+      #phone="ngModel"
+      required
+      pattern="^[0-9]{10}$"
+      class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+    />
+    <p *ngIf="phone.invalid && phone.touched" class="text-red-600 text-xs">
+      Enter a valid 10-digit phone number.
+    </p>
+  </div>
   <div>
       <label class="block text-sm font-medium text-gray-700">Truck Type *</label>
-      <input type="tel" [(ngModel)]="driver.truckType" name="truckType" required
-        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
-    </div>
+<input
+      type="text"
+      name="truckType"
+      [(ngModel)]="driver.truckType"
+      #truckType="ngModel"
+      required
+      class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+    />
+    <p *ngIf="truckType.invalid && truckType.touched" class="text-red-600 text-xs">
+      Truck type is required.
+    </p>
+  </div>
+
     <div>
       <label class="block text-sm font-medium text-gray-700">Driver’s License Number *</label>
-      <input type="text" [(ngModel)]="driver.licenseNumber" name="licenseNumber" required
-        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+      <input
+      type="text"
+      name="licenseNumber"
+      [(ngModel)]="driver.licenseNumber"
+      #licenseNumber="ngModel"
+      required
+      minlength="5"
+      class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+    />
+    <p *ngIf="licenseNumber.invalid && licenseNumber.touched" class="text-red-600 text-xs">
+      License number is required (min 5 characters).
+    </p>
     </div>
 
     <button type="submit"

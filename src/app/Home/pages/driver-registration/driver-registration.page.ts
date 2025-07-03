@@ -18,9 +18,12 @@ export class DriverRegistrationPage implements OnInit {
 
   ngOnInit() {
   }
-    registerDriver() {
-    console.log('Driver registered:', this.driver);
-    // TODO: Send data to backend
+registerDriver() {
+  // Only proceed if form is valid
+  if (this.driver.fullName && this.driver.ownerName && this.driver.phone && this.driver.truckType && this.driver.licenseNumber) {
+    console.log('Registering driver:', this.driver);
+    // your API call or logic here
   }
+}
 
 }
