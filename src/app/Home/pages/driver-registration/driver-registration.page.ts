@@ -29,13 +29,14 @@ export class DriverRegistrationPage implements OnInit {
       console.log('Registering driver:', this.driver);
       // your API call or logic here
       const reqBody = {
-        "fullName": this.driver.fullName,
+        "driverName": this.driver.fullName,
         "ownerName": this.driver.ownerName,
-        "phone": this.driver.phone,
-        "truckType": this.driver.truckType,
+        "phoneNumber": this.driver.phone,
+        "vehicleType": this.driver.truckType,
         "licenseNumber": this.driver.licenseNumber,
         "vehicleNumber": this.driver.vehicleNumber,
       };
+
       this.apiService.postApi(`${apis.driverRegister}`, reqBody).subscribe((response) => {
         if (response.success === true) {
            this.presentToast('Driver Registration successful!', 'success');

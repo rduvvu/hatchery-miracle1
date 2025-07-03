@@ -19,7 +19,7 @@ export class OwnerLoginPage implements OnInit {
   }
    login() {
     const reqBody = {
-      name: this.username,
+      ownerName: this.username,
       password: this.password
     };
     this.apiService.postApi(`${apis.ownerLogin}`, reqBody).subscribe((response) => {
