@@ -9,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class DriverRegistrationPage implements OnInit {
  driver = {
     fullName: '',
-    email: '',
+    ownerName: '',
     phone: '',
+    truckType: '',
     licenseNumber: '',
   };
   constructor() { }
