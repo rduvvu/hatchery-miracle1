@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner-dashboard',
@@ -16,11 +17,14 @@ export class OwnerDashboardPage implements OnInit {
   checkedInDrivers = [{ name: 'Kartik', email: 'kartik@gmail.com', license: '647654854959', status: 'Checkin' },
     { name: 'nistala', email: 'nistala@gmail.com', license: '6747845676', status: 'Checkin' },];
   completedDrivers = [];
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
   get availableDrivers() {
     return this.drivers.filter(d => d.status === 'Available');
+  }
+  logout() {
+     this.router.navigate(['/owner-login']);
   }
 }
