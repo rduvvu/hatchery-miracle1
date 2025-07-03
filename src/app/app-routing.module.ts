@@ -22,7 +22,12 @@ const routes: Routes = [
   {
     path: 'owner-login',
     loadChildren: () => import('./Home/pages/owner-login/owner-login.module').then( m => m.OwnerLoginPageModule)
+  },  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   }
+
+
 
 ];
 

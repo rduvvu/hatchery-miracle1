@@ -17,7 +17,7 @@ export class OwnerLoginPage implements OnInit {
   }
    login() {
     if (this.username === 'owner' && this.password === 'hatchery123') {
-      this.router.navigate(['/owner-dashboard']);
+      this.router.navigate(['/tabs']);
     } else {
       alert('Invalid credentials');
     }
