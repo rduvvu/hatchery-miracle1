@@ -66,40 +66,40 @@ export class ApiServiceService {
     toast.present();
   }
   
-  private apiUrl = 'http://172.17.12.28:9009/nafarm/states';
-  getStates(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
-  }
+  // private apiUrl = 'http://172.17.12.28:9009/nafarm/states';
+  // getStates(): Observable<any[]> {
+  //   return this.http.get<any[]>(this.apiUrl);
+  // }
 
-  getDistricts(stateId: string): Observable<any[]> {
-    return this.http.get<any[]>(`http://172.17.12.28:9009/nafarm/districts?stateId=${stateId}`);
-  }
-  getBlocks(districtId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://172.17.12.28:9009/nafarm/blocks?districtId=${districtId}`);
-  }
-  getMandals(blockId: number): Observable<any[]> {
-    return this.http.get<any[]>(`http://172.17.12.28:9009/nafarm/mandals?blockId=${blockId}`);
-  }
-  getStatesInfo(): Observable<any[]> {
-    return this.http.get<any[]>(apis.getStatesInfo);
-  }
-  getDistrictsInfo(stateId: any): Observable<any[]> {
-    return this.http.get<any[]>(apis.getDistrictsInfo + stateId);
-  }
-  getBlocksInfo(districtId: any): Observable<any[]> {
-    return this.http.get<any[]>(apis.getBlocksInfo + districtId);
-  }
-  getMandalsInfo(blockId: any): Observable<any[]> {
-    return this.http.get<any[]>(apis.getMandalsInfo + blockId);
-  }
-  getPanchayatInfo(mandalId: any): Observable<any[]> {
-    return this.http.get<any[]>(apis.getPanchayatInfo + mandalId);
-  }
-  getVillageInfo(panchayatId: any): Observable<any[]> {
-    return this.http.get<any[]>(apis.getVillageInfo + panchayatId);
-  }
-  getHamletInfo(villageId: any): Observable<any[]> {
-    return this.http.get<any[]>(apis.getHamletInfo + villageId);
-  }
+  // getDistricts(stateId: string): Observable<any[]> {
+  //   return this.http.get<any[]>(`http://172.17.12.28:9009/nafarm/districts?stateId=${stateId}`);
+  // }
+  // getBlocks(districtId: number): Observable<any[]> {
+  //   return this.http.get<any[]>(`http://172.17.12.28:9009/nafarm/blocks?districtId=${districtId}`);
+  // }
+  // getMandals(blockId: number): Observable<any[]> {
+  //   return this.http.get<any[]>(`http://172.17.12.28:9009/nafarm/mandals?blockId=${blockId}`);
+  // }
+  // getStatesInfo(): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getStatesInfo);
+  // }
+  // getDistrictsInfo(stateId: any): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getDistrictsInfo + stateId);
+  // }
+  // getBlocksInfo(districtId: any): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getBlocksInfo + districtId);
+  // }
+  // getMandalsInfo(blockId: any): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getMandalsInfo + blockId);
+  // }
+  // getPanchayatInfo(mandalId: any): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getPanchayatInfo + mandalId);
+  // }
+  // getVillageInfo(panchayatId: any): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getVillageInfo + panchayatId);
+  // }
+  // getHamletInfo(villageId: any): Observable<any[]> {
+  //   return this.http.get<any[]>(apis.getHamletInfo + villageId);
+  // }
 
 }

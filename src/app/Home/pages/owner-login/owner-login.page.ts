@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ApiServiceService } from 'src/app/services/api-service.service';
+import { apis } from 'src/app/services/apis';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,16 +12,23 @@ import { Router } from '@angular/router';
 export class OwnerLoginPage implements OnInit {
   username = '';
   password = '';
-  constructor(private router: Router) { }
+  constructor(private router: Router,private apiService: ApiServiceService) { }
 
   ngOnInit() {
   }
    login() {
-    if (this.username === 'owner' && this.password === 'hatchery123') {
-      this.router.navigate(['/tabs']);
-    } else {
-      alert('Invalid credentials');
-    }
+    const reqBody = {
+      name: this.username,
+      password: this.password
+    };
+    this.apiService.postApi(`${apis.ownerLogin}`, reqBody).subscribe((response) => {
+      if (response.success === true) {
+        sessionStorage.setItem("userId", response.data.id);
+        this.router.navigate(['/tabs']);
+      } else {
+        alert('Invalid credentials');
+      }
+    })
   }
 
 }
