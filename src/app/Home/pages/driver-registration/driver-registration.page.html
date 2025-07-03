@@ -1,0 +1,43 @@
+<div class="max-w-md mx-auto p-6 bg-white rounded-xl shadow">
+  <div class="flex justify-center mb-4">
+    <div class="bg-green-800 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl">
+      👤
+    </div>
+  </div>
+  <h2 class="text-xl font-semibold text-center mb-1">Driver Registration</h2>
+  <p class="text-sm text-gray-600 text-center mb-6">
+    Register to join the Hatchery driver rotation system
+  </p>
+
+  <form (submit)="registerDriver()" class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Full Name *</label>
+      <input type="text" [(ngModel)]="driver.fullName" name="fullName" required
+        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Email Address *</label>
+      <input type="email" [(ngModel)]="driver.email" name="email" required
+        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Phone Number *</label>
+      <input type="tel" [(ngModel)]="driver.phone" name="phone" required
+        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Driver’s License Number *</label>
+      <input type="text" [(ngModel)]="driver.licenseNumber" name="licenseNumber" required
+        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600">
+    </div>
+
+    <button type="submit"
+      class="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900 transition-colors">
+      Register as Driver
+    </button>
+  </form>
+</div>
+

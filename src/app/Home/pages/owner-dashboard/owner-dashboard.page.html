@@ -1,0 +1,116 @@
+<div class="p-6 max-w-6xl mx-auto">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-4">
+    <div>
+      <h1 class="text-2xl font-semibold">Hatchery Management Dashboard</h1>
+      <p class="text-sm text-gray-600">Manage driver check-ins and rotations</p>
+    </div>
+    <button class="text-sm px-4 py-2 border rounded hover:bg-gray-100">Logout</button>
+  </div>
+
+  <!-- Stats -->
+<div class="flex grid-cols-12 justify-center  gap-4 mb-6">
+  <div class="border rounded-xl p-4 text-center shadow-md">
+    <div class="text-xl font-bold text-green-900 flex justify-center items-center gap-2">
+      👥 <span>{{ drivers.length }}</span>
+    </div>
+    <p class="text-sm text-gray-600 mt-2">Total Drivers</p>
+  </div>
+
+  <div class="border rounded-xl p-4 text-center shadow-md">
+    <div class="text-xl font-bold text-orange-500 flex justify-center items-center gap-2">
+      📅 <span>{{ checkedInDrivers.length }}</span>
+    </div>
+    <p class="text-sm text-gray-600 mt-2">Checked In</p>
+  </div>
+
+  <div class="border rounded-xl p-4 text-center shadow-md">
+    <div class="text-xl font-bold text-green-600 flex justify-center items-center gap-2">
+      ✔️ <span>{{ availableDrivers.length }}</span>
+    </div>
+    <p class="text-sm text-gray-600 mt-2">Available</p>
+  </div>
+</div>
+
+
+  <!-- Check-in Control -->
+  <div class="border rounded-xl p-4 mb-6">
+    <h2 class="text-md font-semibold mb-2">Check-in Control</h2>
+    <div class="flex items-center gap-4 mb-2">
+      <button class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Start New Check-in Round</button>
+      <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded cursor-not-allowed" disabled>Complete Current Round</button>
+    </div>
+    <p class="text-sm text-gray-500">No active check-in round. Start a new round to allow check-ins.</p>
+  </div>
+
+  <!-- Driver Lists -->
+<div class="mb-4 border-b border-gray-200">
+  <ul class="flex -mb-px text-sm font-medium text-center">
+    <li class="mr-2">
+      <button (click)="activeTab = 'available'"
+        [ngClass]="{
+          'border-b-2 text-green-600 border-green-600': activeTab === 'available',
+          'text-gray-500 hover:text-green-600': activeTab !== 'available'
+        }"
+        class="inline-block p-4 border-b-2 rounded-t-lg">Available</button>
+    </li>
+    <li class="mr-2">
+      <button (click)="activeTab = 'checkedIn'"
+        [ngClass]="{
+          'border-b-2 text-orange-600 border-orange-600': activeTab === 'checkedIn',
+          'text-gray-500 hover:text-orange-600': activeTab !== 'checkedIn'
+        }"
+        class="inline-block p-4 border-b-2 rounded-t-lg">Checked-In</button>
+    </li>
+    <li>
+      <button (click)="activeTab = 'completed'"
+        [ngClass]="{
+          'border-b-2 text-gray-700 border-gray-700': activeTab === 'completed',
+          'text-gray-500 hover:text-gray-700': activeTab !== 'completed'
+        }"
+        class="inline-block p-4 border-b-2 rounded-t-lg">Completed</button>
+    </li>
+  </ul>
+</div>
+
+<!-- Available Tab -->
+<div *ngIf="activeTab === 'available'" class="bg-green-50 border rounded-xl p-4 h-[400px] overflow-y-scroll">
+  <h3 class="font-semibold text-green-800 mb-3">Available Drivers ({{ availableDrivers.length }})</h3>
+  <ng-container *ngIf="availableDrivers.length; else noAvailable">
+    <div *ngFor="let d of availableDrivers" class="border rounded-md p-3 mb-2 bg-white shadow-sm">
+      <p class="font-semibold">{{ d.name }}</p>
+      <p class="text-sm text-gray-600">{{ d.email }}</p>
+      <p class="text-sm text-gray-600">License: {{ d.license }}</p>
+      <span class="text-xs bg-green-700 text-white px-2 py-0.5 rounded mt-1 inline-block">Available</span>
+    </div>
+  </ng-container>
+  <ng-template #noAvailable><p>No available drivers</p></ng-template>
+</div>
+
+<!-- Checked-in Tab -->
+<div *ngIf="activeTab === 'checkedIn'" class="bg-orange-50 border rounded-xl p-4 h-[400px] overflow-y-scroll">
+  <h3 class="font-semibold text-orange-700 mb-3">Checked-in Drivers ({{ checkedInDrivers.length }})</h3>
+  <ng-container *ngIf="checkedInDrivers.length; else noCheckedIn">
+    <div *ngFor="let d of checkedInDrivers" class="border rounded-md p-3 mb-2 bg-white shadow-sm">
+      <p class="font-semibold">{{ d.name }}</p>
+      <p class="text-sm text-gray-600">{{ d.email }}</p>
+      <p class="text-sm text-gray-600">License: {{ d.license }}</p>
+    </div>
+  </ng-container>
+  <ng-template #noCheckedIn><p>No checked-in drivers</p></ng-template>
+</div>
+
+<!-- Completed Tab -->
+<div *ngIf="activeTab === 'completed'" class="bg-gray-50 border rounded-xl p-4 h-[400px] overflow-y-scroll">
+  <h3 class="font-semibold text-gray-700 mb-3">Completed Drivers ({{ drivers.length }})</h3>
+  <ng-container *ngIf="drivers.length; else noCompleted">
+    <div *ngFor="let d of drivers" class="border rounded-md p-3 mb-2 bg-white shadow-sm">
+      <p class="font-semibold">{{ d.name }}</p>
+      <p class="text-sm text-gray-600">{{ d.email }}</p>
+      <p class="text-sm text-gray-600">License: {{ d.license }}</p>
+    </div>
+  </ng-container>
+  <ng-template #noCompleted><p>No completed drivers</p></ng-template>
+</div>
+
+</div>
