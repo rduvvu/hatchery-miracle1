@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { apis } from 'src/app/services/apis';
 import { Router } from '@angular/router';
@@ -18,7 +19,7 @@ export class DriverRegistrationPage implements OnInit {
     licenseNumber: '',
     vehicleNumber: '',
   };
-  constructor(private router: Router, private apiService: ApiServiceService) { }
+  constructor(private router: Router, private apiService: ApiServiceService,private toastController: ToastController) { }
 
   ngOnInit() {
   }
@@ -37,6 +38,7 @@ export class DriverRegistrationPage implements OnInit {
       };
       this.apiService.postApi(`${apis.driverRegister}`, reqBody).subscribe((response) => {
         if (response.success === true) {
+           this.presentToast('Driver Registration successful!', 'success');
           this.router.navigate(['/tabs']);
           this.driver = {}
         } else {
@@ -46,5 +48,16 @@ export class DriverRegistrationPage implements OnInit {
     }
 
   }
+
+
+async presentToast(message: string, color: string = 'success') {
+  const toast = await this.toastController.create({
+    message,
+    duration: 3000,           // visible for 3 seconds
+    color,                    // 'success', 'danger', 'warning', etc.
+    position: 'bottom'
+  });
+  await toast.present();
 }
 
+}
