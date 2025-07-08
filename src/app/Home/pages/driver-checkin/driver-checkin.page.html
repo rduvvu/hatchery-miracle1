@@ -9,10 +9,12 @@
     <p class="text-gray-600 text-center mt-1">No active check-in round. Please wait for the owner to start a new round.</p>
   </div>
 
-  <!-- Search -->
+ <!-- Search -->
   <div class="bg-white border rounded-xl p-4 my-6">
     <h3 class="text-md font-semibold mb-2">Find Your Name</h3>
-    <p class="text-sm text-gray-500 mb-2">Search by name, email, or license number</p>
+    <p class="text-sm text-gray-500 mb-2">
+      Search by name, email, or license number
+    </p>
     <input
       type="text"
       [(ngModel)]="searchTerm"
@@ -23,27 +25,19 @@
   </div>
 
   <!-- Driver Cards -->
-  <div *ngFor="let driver of filteredDrivers" class="bg-green-50 rounded-lg p-4 mb-4 border">
-    <div class="flex justify-between items-center mb-2">
-      <div class="flex items-center gap-2">
-        <span class="text-green-800">🕒</span>
-        <h4 class="font-semibold">{{ driver.name }}</h4>
-        <span class="text-xs bg-green-600 text-white px-2 py-0.5 rounded">{{ driver.status }}</span>
+  <div class="overflow-y-scroll h-[52vh]">
+    <div
+      *ngFor="let driver of driversList"
+      class="bg-green-50 rounded-lg p-4 mb-4 border"
+    >
+      <div class="flex justify-between items-center mb-2">
+        <p class="font-semibold">{{ driver.driverName.toUpperCase()}}</p>
+        <button class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700 ml-4" (click)="changeDriverStatus(driver)">Check-In</button>
       </div>
-      <button
-        class="bg-green-200 text-gray-800 px-3 py-1 text-sm rounded"
-        [ngClass]="{
-          'bg-green-600 text-white': driver.status === 'Available',
-          'bg-gray-400 text-white': driver.status !== 'Available'
-        }"
-        disabled
-      >
-        {{ driver.status === 'Available' ? 'Available' : 'Not Available' }}
-      </button>
+      <p class="text-sm text-gray-700"><b>Phone:</b> {{ driver.phoneNumber}}</p>
+      <p class="text-sm text-gray-700"><b>Vehicle Number: </b> {{ driver.vehicleNumber === null ? '-' : driver.vehicleNumber }}</p>
+      <p class="text-sm text-gray-700"><b>License Number:</b>  {{ driver.licenseNumber }}</p>
     </div>
-    <p class="text-sm text-gray-700">Email: {{ driver.email }}</p>
-    <p class="text-sm text-gray-700">Phone: {{ driver.phone }}</p>
-    <p class="text-sm text-gray-700">License: {{ driver.license }}</p>
   </div>
 
 </div>

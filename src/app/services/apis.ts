@@ -7,4 +7,6 @@ export const apis = {
   driversStatusDetails: baseUrl + '/checkin/driver-details',
   driverCheckinFromAvailableList: baseUrl + '/checkin',
   driversList: baseUrl + '/users',
+  roundwiseDriverDetails: baseUrl + '/checkin/completed-drivers',
+  availableDriversListForCheckIn: baseUrl + '/checkin/available-drivers',
 }

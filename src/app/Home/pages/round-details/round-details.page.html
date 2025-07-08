@@ -13,15 +13,35 @@
         <rect x="8.5" y="11.5" width="7" height="2" rx="1" fill="currentColor"/>
       </svg>
     </div>
-    <h2 class="text-2xl font-semibold">Driver's List</h2>
+    <h2 class="text-2xl font-semibold">Completed Round Details</h2>
     <p class="text-gray-600 text-center mt-1">
-       Comprehensive overview of all drivers who have been successfully registered in the app.
+      Round ID: <span class="font-semibold">{{ roundId}}</span>
     </p>
+      <p class="text-gray-600 text-center mt-1">
+      Total Drivers: <span class="font-semibold">{{ completedCount }}</span>
+    </p>
+
   </div>
+  <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
+  <div class="flex flex-col items-center bg-blue-100 border rounded-lg  py-4 shadow">
+    <span class="text-sm text-gray-500"> Date</span>
+    <span class="text-lg font-semibold text-green-800">{{ roundDate | date:'dd/MM/yyyy' }}</span>
+  </div>
+  <!-- Start Time -->
+  <div class="flex flex-col items-center bg-blue-100 border rounded-lg px-6 py-4 shadow">
+    <span class="text-sm text-gray-500">Start Time</span>
+    <span class="text-lg font-semibold text-blue-700">{{ startTime }}</span>
+  </div>
+
+  <!-- End Time -->
+  <div class="flex flex-col items-center bg-blue-100 border rounded-lg px-6 py-4 shadow">
+    <span class="text-sm text-gray-500">End Time</span>
+    <span class="text-lg font-semibold text-red-600">{{ endTime }}</span>
+  </div>
+</div>
 
   <!-- Search -->
   <div class="bg-white border rounded-xl p-4 my-6">
-    <h3 class="text-md font-semibold mb-2">Find Your Name</h3>
     <p class="text-sm text-gray-500 mb-2">
       Search by name, email, or license number
     </p>
@@ -36,10 +56,12 @@
 
   <!-- Driver Cards -->
   <div class="overflow-y-scroll h-[52vh]">
+    <!-- Summary Badges Row -->
     <div
-      *ngFor="let driver of driversList"
+      *ngFor="let driver of roundDetailList"
       class="bg-green-50 rounded-lg p-4 mb-4 border"
     >
+
       <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2">
           <span class="text-green-800">🕒</span>

@@ -87,7 +87,7 @@ export class OwnerDashboardPage implements OnInit {
         }
       });
   }
-  openRoundDetailsDialog(value:any) {
+  openRoundDetails(value:any) {
     console.log('Open round details dialog clicked', value);
     let roundNumber = value.match(/\d+/);
     this.router.navigate(['/round-details'], {

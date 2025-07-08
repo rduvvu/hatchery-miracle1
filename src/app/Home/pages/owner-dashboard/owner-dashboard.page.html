@@ -99,7 +99,7 @@
     <div *ngFor="let d of availableDriversList" class="border rounded-md p-3 mb-2 bg-white shadow-sm">
         <div class="flex justify-between items-start">
         <p class="font-semibold">{{ d.driverName.toUpperCase()}}</p>
-        <button class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700" (click)="changeDriverStatus(d)">Check-In</button>
+        <!-- <button class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700" (click)="changeDriverStatus(d)">Check-In</button> -->
       </div>
       <p class="text-sm text-gray-600"><b>Phone:</b> {{ d.phoneNumber }}</p>
       <p class="text-sm text-gray-600"><b>License:</b> {{ d.licenseNumber }}</p>
@@ -133,7 +133,7 @@
     <div *ngFor="let d of roundsCompletedList" class="border rounded-md bg-white shadow-sm justify-between items-center">
       <button
         class="bg-green-600 text-white text-lg px-3 py-1 rounded hover:bg-green-700 w-full whitespace-nowrap"
-        (click)="openRoundDetailsDialog(d)">
+        (click)="openRoundDetails(d)">
         {{ d.round ? 'Round ' + d.round : d }} Completed
       </button>
     </div>

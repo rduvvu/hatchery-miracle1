@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: DriverCheckinPage
+  },  {
+    path: 'drop-location-modal',
+    loadChildren: () => import('./drop-location-modal/drop-location-modal.module').then( m => m.DropLocationModalPageModule)
   }
+
 ];
 
 @NgModule({
