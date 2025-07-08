@@ -4,4 +4,7 @@ export const apis = {
   //authentication
   ownerLogin: baseUrl + '/users/login',
   driverRegister: baseUrl + '/users/register',
+  driversStatusDetails: baseUrl + '/checkin/driver-details',
+  driverCheckinFromAvailableList: baseUrl + '/checkin',
+  driversList: baseUrl + '/users',
 }

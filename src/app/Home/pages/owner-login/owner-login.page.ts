@@ -14,7 +14,7 @@ export class OwnerLoginPage implements OnInit {
   username = '';
   password = '';
   constructor(private router: Router,private apiService: ApiServiceService,private toastController: ToastController) { }
- 
+
   ngOnInit() {
   }
    login() {
@@ -22,9 +22,11 @@ export class OwnerLoginPage implements OnInit {
       ownerName: this.username,
       password: this.password
     };
-    this.apiService.postApi(`${apis.ownerLogin}`, reqBody).subscribe((response) => {
+    this.apiService.postApi(`${apis.ownerLogin}`, reqBody).subscribe((response:any) => {
+      console.log('Login response:', response);
+
       if (response.success === true) {
-        sessionStorage.setItem("userId", response.data.id);
+        sessionStorage.setItem("userId", response.userId);
         this.presentToast("Login successful!","success")
         this.router.navigate(['/tabs']);
       } else {
@@ -45,3 +47,4 @@ async presentToast(message: string, color: string = 'success') {
 }
 
 }
+

@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { apis } from 'src/app/services/apis';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-driver-registration',
@@ -19,9 +20,26 @@ export class DriverRegistrationPage implements OnInit {
     licenseNumber: '',
     vehicleNumber: '',
   };
-  constructor(private router: Router, private apiService: ApiServiceService,private toastController: ToastController) { }
+  truckTypes: string[] = ['Ape Xtra LDX','Bolero Pik-Up 4x2','Bolero Pik-Up ExtraStrong','Bolero Maxitruck Plus','DCM 4-wheeler', 'DCM Toyota HT', 'DCM 909', 'Tata 407 EX', 'Tata 407 Pickup','Tata 407 Gold SFC','Tata 1109 EX','Tata 1120 LPT','Tata Ace Gold'];
+
+   driverRegisterForm!: FormGroup;
+  constructor(private router: Router,private formBuilder: FormBuilder, private apiService: ApiServiceService,private toastController: ToastController) { }
 
   ngOnInit() {
+  }
+
+   initFarmerForm() {
+    this.driverRegisterForm = this.formBuilder.group({
+      fullName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(35)]],
+      ownerName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(35)]],
+      phone: ['', [Validators.required, Validators.pattern(/^\d{3}-\d{3}-\d{4}$/)]],
+      truckType: ['', Validators.required],
+      licenseNumber: ['', Validators.required,Validators.pattern(/^[0-9]+$/)],
+      vehicleNumber: ['', [
+      Validators.required,
+      Validators.pattern(/^[A-Z0-9]+$/)
+      ]],
+    });
   }
   registerDriver() {
     // Only proceed if form is valid

@@ -20,6 +20,13 @@ const routes: Routes = [
         path: 'register',
         loadChildren: () => import('../Home/pages/driver-registration/driver-registration.module').then(m => m.DriverRegistrationPageModule)
       },
+      {
+        path: 'drivers-list',
+        loadChildren: () => import('../Home/pages/drivers-list/drivers-list.module').then(m => m.DriversListPageModule)
+      },{
+        path: 'profile',
+        loadChildren: () => import('../Home/pages/profile/profile.module').then(m => m.ProfilePageModule)
+      },
        {
         path: '',
         redirectTo: '/tabs/home',  // 👈 Default route when /tabs is accessed
@@ -27,7 +34,7 @@ const routes: Routes = [
       }
     ]
   }
-  
+
 ];
 
 @NgModule({

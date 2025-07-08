@@ -22,10 +22,24 @@ const routes: Routes = [
   {
     path: 'owner-login',
     loadChildren: () => import('./Home/pages/owner-login/owner-login.module').then( m => m.OwnerLoginPageModule)
-  },  {
+  },
+  {
+    path: 'drivers-list',
+    loadChildren: () => import('./Home/pages/drivers-list/drivers-list.module').then( m => m.DriversListPageModule)
+  },
+  {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },  {
+    path: 'profile',
+    loadChildren: () => import('./Home/pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'round-details',
+    loadChildren: () => import('./Home/pages/round-details/round-details.module').then( m => m.RoundDetailsPageModule)
   }
+
+
 
 
 
