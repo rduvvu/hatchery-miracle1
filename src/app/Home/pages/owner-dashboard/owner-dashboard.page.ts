@@ -95,9 +95,7 @@ export class OwnerDashboardPage implements OnInit {
       queryParams: { round : roundNumber ? parseInt(roundNumber[0], 10) : null },
     });
   }
-  get availableDrivers() {
-    return this.availableDriversList.filter((d) => d.status === 'Available');
-  }
+
   startNewRound(){
     console.log(this.availableDriversList, 'Available Drivers List');
     if(this.availableDriversList.length === 0) {
@@ -132,12 +130,8 @@ export class OwnerDashboardPage implements OnInit {
   }
 
   completeCurrentRound(){
-     console.log(this.availableDriversList, 'Available Drivers List');
-
     const userId = sessionStorage.getItem('userId');
-
     const url = `${apis.completeCurrentRound}?ownerId=${userId}&round=${this.driverStatusDetails.latestRound}&flag=true`;
-
     this.apiService.putApi(url, {}).subscribe({
       next: (res: any) => {
         this.isSubmitting = false;
@@ -161,9 +155,8 @@ export class OwnerDashboardPage implements OnInit {
         console.error('Error fetching Driver Details:', err);
       },
     });
-
-
   }
+
 
   async presentToast(message: string, color: string = 'success') {
     const toast = await this.toastController.create({

@@ -17,7 +17,7 @@ export class DriverCheckinPage {
   isSubmitting:boolean = false;
   driversList:any[] = [];
   dropLoactions: any[] = [ 'Gantyada', 'Poosapatirega', 'Denkada', 'Bhogapuram', 'Srungavarapukota', 'Jami', 'Vepada', 'Lakkavarapukota', 'Kothavalasa', 'Bondapalli'];
-
+  driversStatus: boolean = false;
   filteredDrivers : any[] = [];
 
   constructor(public modalController: ModalController, private router: Router, public apiService: ApiServiceService,private toastController: ToastController,private alertController: AlertController) {}
