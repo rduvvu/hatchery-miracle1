@@ -82,6 +82,7 @@ export class OwnerDashboardPage implements OnInit {
           //this.router.navigate(['/tabs']);
           //console.log(response.success, '100');
         } else {
+          this.presentToast(` ${value.driverName} We are unable to Checked-in !`, 'danger');
           alert('Unable to change driver status');
         }
       });
