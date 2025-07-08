@@ -26,12 +26,12 @@ export class DriverCheckinPage {
 
 
   ionViewWillEnter() {
-    this.getDriversList();
+    this.getDriversList('');
   }
-   getDriversList() {
+   getDriversList(searchTerm: string) {
     this.isSubmitting = true;
     const userId = sessionStorage.getItem('userId');
-    const url = `${apis.availableDriversListForCheckIn}?ownerId=${userId}`;
+    const url = `${apis.availableDriversListForCheckIn}?ownerId=${userId}&searchText=${searchTerm? searchTerm : ''}`;
 
     this.apiService.getApi(url).subscribe({
       next: (res: any) => {
@@ -80,7 +80,7 @@ async changeDriverStatus(driver: any) {
       next: (response) => {
         if (response.success) {
           this.presentToast('Checked-in successfully!', 'success');
-          this.getDriversList();
+          this.getDriversList('');
         } else {
           this.presentToast(`${driver.driverName}: Unable to check-in.`, 'danger');
         }
@@ -92,14 +92,9 @@ async changeDriverStatus(driver: any) {
   }
 }
 
-
     filterDrivers() {
     const term = this.searchTerm.toLowerCase();
-    this.filteredDrivers =  this.driversList.filter(driver =>
-      driver.name.toLowerCase().includes(term) ||
-      driver.email.toLowerCase().includes(term) ||
-      driver.license.includes(term)
-    );
+    this.getDriversList(term)
   }
 
   async presentToast(message: string, color: string = 'success') {

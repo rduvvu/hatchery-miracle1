@@ -23,12 +23,12 @@ searchTerm: string = '';
 
 
   ionViewWillEnter() {
-    this.getDriversList();
+    this.getDriversList('');
   }
-   getDriversList() {
+   getDriversList(searchTerm: string) {
     this.isSubmitting = true;
     const userId = sessionStorage.getItem('userId');
-    const url = `${apis.driversList}?ownerId=${userId}`;
+    const url = `${apis.driversList}?ownerId=${userId}&searchText=${searchTerm? searchTerm : ''}`;
 
     this.apiService.getApi(url).subscribe({
       next: (res: any) => {
@@ -52,10 +52,6 @@ searchTerm: string = '';
   }
     filterDrivers() {
     const term = this.searchTerm.toLowerCase();
-    this.filteredDrivers =  this.driversList.filter(driver =>
-      driver.name.toLowerCase().includes(term) ||
-      driver.email.toLowerCase().includes(term) ||
-      driver.license.includes(term)
-    );
+    this.getDriversList(term)
   }
 }
