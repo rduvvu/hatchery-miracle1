@@ -133,11 +133,10 @@ export class OwnerDashboardPage implements OnInit {
 
   completeCurrentRound(){
      console.log(this.availableDriversList, 'Available Drivers List');
-    if(this.availableDriversList.length === 0) {
-    const userId = sessionStorage.getItem('userId');
-    let newRoundId = this.driverStatusDetails.latestRound+1
 
-    const url = `${apis.completeCurrentRound}?ownerId=${userId}&round=${newRoundId}&flag=true`;
+    const userId = sessionStorage.getItem('userId');
+
+    const url = `${apis.completeCurrentRound}?ownerId=${userId}&round=${this.driverStatusDetails.latestRound}&flag=true`;
 
     this.apiService.putApi(url, {}).subscribe({
       next: (res: any) => {
@@ -162,7 +161,7 @@ export class OwnerDashboardPage implements OnInit {
         console.error('Error fetching Driver Details:', err);
       },
     });
-    }
+
 
   }
 
