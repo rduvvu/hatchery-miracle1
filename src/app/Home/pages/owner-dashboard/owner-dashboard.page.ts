@@ -11,13 +11,14 @@ import { ToastController } from '@ionic/angular';
 })
 export class OwnerDashboardPage implements OnInit {
   isSubmitting = false;
-  checkinAccordionOpen = false;
+  checkinAccordionOpen = true;
   driverStatusDetails: any;
   availableDriversList: any[] = [];
   checkedInDriversList: any[] = [];
   completedDriversList: any[] = [];
   roundsCompletedList: any[] = [];
   activeTab: 'available' | 'checkedIn' | 'completed' = 'available';
+  disableNewRoundButton = false;
   constructor(
     private router: Router,
     public apiService: ApiServiceService,
@@ -96,6 +97,73 @@ export class OwnerDashboardPage implements OnInit {
   }
   get availableDrivers() {
     return this.availableDriversList.filter((d) => d.status === 'Available');
+  }
+  startNewRound(){
+    console.log(this.availableDriversList, 'Available Drivers List');
+    if(this.availableDriversList.length === 0) {
+    const userId = sessionStorage.getItem('userId');
+    const url = `${apis.newRound}?ownerId=${userId}`;
+
+    this.apiService.postApi(url, {}).subscribe({
+      next: (res: any) => {
+        this.isSubmitting = false;
+        if (res === null || res === undefined) {
+          if (res.success !== true) {
+            throw new Error('Failed to fetch driver details');
+          } else if (!res) {
+            throw new Error('No data found');
+          }
+        } else {
+            if (res.success === false && res.message) {
+            this.presentToast(res.message, 'danger');
+            } else {
+            this.presentToast('New round started successfully!', 'success');
+            this.getDriversStatusDetails();
+            }
+
+        }
+      },
+      error: (err: any) => {
+        console.error('Error fetching Driver Details:', err);
+      },
+    });
+    }
+
+  }
+
+  completeCurrentRound(){
+     console.log(this.availableDriversList, 'Available Drivers List');
+    if(this.availableDriversList.length === 0) {
+    const userId = sessionStorage.getItem('userId');
+    let newRoundId = this.driverStatusDetails.latestRound+1
+
+    const url = `${apis.completeCurrentRound}?ownerId=${userId}&round=${newRoundId}&flag=true`;
+
+    this.apiService.putApi(url, {}).subscribe({
+      next: (res: any) => {
+        this.isSubmitting = false;
+        if (res === null || res === undefined) {
+          if (res.success !== true) {
+            throw new Error('Failed to Update Completed Round details');
+          } else if (!res) {
+            throw new Error('No data found');
+          }
+        } else {
+            if (res.success === false && res.message) {
+            this.presentToast(res.message, 'danger');
+            } else {
+            this.presentToast('Successfully updated completed round!', 'success');
+            this.getDriversStatusDetails();
+            }
+
+        }
+      },
+      error: (err: any) => {
+        console.error('Error fetching Driver Details:', err);
+      },
+    });
+    }
+
   }
 
   async presentToast(message: string, color: string = 'success') {

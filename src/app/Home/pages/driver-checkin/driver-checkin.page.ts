@@ -73,7 +73,7 @@ async changeDriverStatus(driver: any) {
       vehicleNumber: driver.vehicleNumber,
       hatcheryId: driver.hatcheryId,
       ownerId: driver.ownerId,
-      dropLoactions: data.selectedLocation
+      dropLocation: data.selectedLocation
     };
 
     this.apiService.postApi(`${apis.driverCheckinFromAvailableList}`, reqBody).subscribe({
