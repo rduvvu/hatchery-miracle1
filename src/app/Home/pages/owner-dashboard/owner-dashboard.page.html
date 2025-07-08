@@ -55,8 +55,22 @@
       class="px-4 pb-4"
     >
       <div class="flex items-center gap-4 mb-2">
-        <button class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-800">Start New Check-in Round</button>
-        <button class="bg-gray-300 text-gray-700 px-4 py-2 rounded cursor-not-allowed" disabled>Complete Current Round</button>
+        <button
+        [ngClass]="availableDriversList.length === 0 ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-green-700 text-white px-4 py-2 rounded'"
+          (click)="startNewRound()"
+          [disabled]="availableDriversList.length == 0"
+          >
+          Start New Check-in Round
+        </button>
+
+          <button
+          [ngClass]="checkedInDriversList.length !== 0 ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-[#0d416b] text-white px-4 py-2 rounded'"
+          (click)="completeCurrentRound()"
+          [disabled]="checkedInDriversList.length == 0"
+          >
+          Complete Current Round
+        </button>
+
       </div>
       <p class="text-sm text-gray-500">No active check-in round. Start a new round to allow check-ins.</p>
     </div>

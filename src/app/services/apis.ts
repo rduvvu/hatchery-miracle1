@@ -9,4 +9,7 @@ export const apis = {
   driversList: baseUrl + '/users',
   roundwiseDriverDetails: baseUrl + '/checkin/completed-drivers',
   availableDriversListForCheckIn: baseUrl + '/checkin/available-drivers',
+  newRound: baseUrl + '/checkin/start-new-round',
+  completeCurrentRound: baseUrl + '/checkin/complete-round',
 }
+
