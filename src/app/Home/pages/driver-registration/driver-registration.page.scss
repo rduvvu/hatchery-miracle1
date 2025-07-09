@@ -1,4 +1,7 @@
-ion-item::part(native) {
-  padding-left: 0px;
-  padding-right: 0px;
+ion-select::part(text) {
+  text-align: center;
+}
+
+ion-select-option::part(native) {
+  text-align: center;
 }
