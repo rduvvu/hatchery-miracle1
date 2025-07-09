@@ -58,15 +58,15 @@
         <button
         [ngClass]="availableDriversList.length === 0 ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-green-700 text-white px-4 py-2 rounded'"
           (click)="startNewRound()"
-          [disabled]="availableDriversList.length == 0"
+          [disabled]="availableDriversList.length == 0 && !moveToDriverCheckin "
           >
           Start New Check-in Round
         </button>
 
           <button
-          [ngClass]="checkedInDriversList.length !== 0 ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-[#0d416b] text-white px-4 py-2 rounded'"
+          [ngClass]="availableDriversList.length !== 0 ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-[#0d416b] text-white px-4 py-2 rounded'"
           (click)="completeCurrentRound()"
-          [disabled]="checkedInDriversList.length == 0"
+          [disabled]="availableDriversList.length != 0"
           >
           Complete Current Round
         </button>

@@ -32,16 +32,17 @@ export class RoundDetailsPage implements OnInit {
   ionViewWillEnter() {
     this.aroute.queryParams.subscribe((params) => {
       if (params['round']) {
-        this.getRoundDetails(params['round']);
+          this.roundId = params['round'];
+        this.getRoundDetails(params['round'],'');
       } else {
         console.error('No round parameter found in query params');
       }
     });
   }
-  getRoundDetails(roundId: number) {
+  getRoundDetails(roundId: number, searchTerm: string) {
     this.isSubmitting = true;
     const userId = sessionStorage.getItem('userId');
-    const url = `${apis.roundwiseDriverDetails}?round=${roundId}&ownerId=${userId}`;
+    const url = `${apis.roundwiseDriverDetails}?round=${roundId}&ownerId=${userId}&search=${searchTerm? searchTerm : ''}`;
 
     this.apiService.getApi(url).subscribe({
       next: (res: any) => {
@@ -70,11 +71,6 @@ export class RoundDetailsPage implements OnInit {
   }
   filterDrivers() {
     const term = this.searchTerm.toLowerCase();
-    this.filteredDrivers = this.roundDetailList.filter(
-      (driver) =>
-        driver.name.toLowerCase().includes(term) ||
-        driver.email.toLowerCase().includes(term) ||
-        driver.license.includes(term)
-    );
+    this.getRoundDetails(this.roundId,term)
   }
 }

@@ -19,6 +19,7 @@ export class DriverCheckinPage {
   dropLoactions: any[] = [ 'Gantyada', 'Poosapatirega', 'Denkada', 'Bhogapuram', 'Srungavarapukota', 'Jami', 'Vepada', 'Lakkavarapukota', 'Kothavalasa', 'Bondapalli'];
   driversStatus: boolean = false;
   filteredDrivers : any[] = [];
+  availableCount: number = 0;
 
   constructor(public modalController: ModalController, private router: Router, public apiService: ApiServiceService,private toastController: ToastController,private alertController: AlertController) {}
 
@@ -31,7 +32,7 @@ export class DriverCheckinPage {
     if (checkinBoolean === 'true') {
       this.driversStatus = true;
       if (this.driversList.length === 0) {
-      sessionStorage.removeItem('moveToDriverCheckin');
+      sessionStorage.setItem("moveToDriverCheckin", 'false');
     }
     } else {
       this.driversStatus = false;
@@ -54,6 +55,7 @@ export class DriverCheckinPage {
           }
         } else {
           this.driversList = res.availableDrivers || [];
+          this.availableCount = res.availableCount || 0;
           console.log('Drivers fetched successfully:', this.driversList);
 
         }

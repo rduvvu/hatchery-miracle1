@@ -109,24 +109,28 @@
         Vehicle Number is required (min 5 characters).
       </p>
     </div>
-  <ion-item class="mt-2 w">
-  <ion-label position="stacked" class="text-sm font-medium text-gray-700">Truck Type *</ion-label>
-  <ion-select
-    interface="popover"
-    placeholder="Select truck type"
-    [(ngModel)]="driver.truckType"
-    name="truckType"
-    #truckType="ngModel"
-    required
-    class=" mt-1 block w-full px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-green-600"
-  >
-    <ion-select-option *ngFor="let type of truckTypes" [value]="type">{{ type }}</ion-select-option>
-  </ion-select>
-</ion-item>
-
-<p *ngIf="truckType.invalid && truckType.touched" class="text-red-600 text-xs mt-1">
+    <div>
+      <label class="block text-sm font-medium text-gray-700"
+        >Truck Type *</label
+      >
+      <select
+        name="truckType"
+        [(ngModel)]="driver.truckType"
+        #truckType="ngModel"
+        required
+        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+      >
+        <option value="" disabled selected>Select Truck Type</option>
+        <option *ngFor="let type of truckTypes" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+      <p *ngIf="truckType.invalid && truckType.touched" class="text-red-600 text-xs mt-1">
   Please select a truck type.
 </p>
+    </div>
+
+
 
 
 

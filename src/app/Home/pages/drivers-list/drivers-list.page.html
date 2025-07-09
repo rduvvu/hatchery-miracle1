@@ -17,19 +17,18 @@
     <p class="text-gray-600 text-center mt-1">
        Comprehensive overview of all drivers who have been successfully registered in the app.
     </p>
+    <p class="text-gray-600 text-center mt-1">
+      <b>Total Drivers: <span class="font-semibold">{{ driversList.length }}</span></b>
+    </p>
   </div>
 
   <!-- Search -->
-  <div class="bg-white border rounded-xl p-4 my-6">
-    <h3 class="text-md font-semibold mb-2">Find Your Name</h3>
-    <p class="text-sm text-gray-500 mb-2">
-      Search by name or vehicle number
-    </p>
+    <div class="bg-white  p-1 my-2">
     <input
       type="text"
       [(ngModel)]="searchTerm"
       (input)="filterDrivers()"
-      placeholder="Search for your name..."
+      placeholder="Search for your name or vehicle number..."
       class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
     />
   </div>
@@ -42,22 +41,12 @@
     >
       <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2">
-          <span class="text-green-800">🕒</span>
+          <!-- <span class="text-green-800">🕒</span> -->
           <h4 class="font-semibold">{{ driver.driverName.toUpperCase()}}</h4>
           <span class="text-xs bg-green-600 text-white px-2 py-0.5 rounded"
             >{{ driver.status }}</span
           >
         </div>
-        <!-- <button
-          class="bg-green-200 text-gray-800 px-3 py-1 text-sm rounded"
-          [ngClass]="{
-             'bg-green-600 text-white': driver.status === 'Available',
-             'bg-gray-400 text-white': driver.status !== 'Available'
-           }"
-          disabled
-        >
-          {{ driver.status === 'Available' ? 'Available' : 'Not Available' }}
-        </button> -->
       </div>
        <p class="text-sm text-gray-700"><b>Owner Name:</b>  {{ driver.ownerName }}</p>
       <p class="text-sm text-gray-700"><b>Phone:</b> {{ driver.phoneNumber}}</p>

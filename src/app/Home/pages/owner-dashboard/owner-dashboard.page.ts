@@ -133,6 +133,8 @@ export class OwnerDashboardPage implements OnInit {
       this.router.navigate(['/tabs/checkin']);
       //this.presentToast('No drivers available for a new round', 'warning');
      // return;
+    }else{
+      this.moveToDriverCheckin = false;
     }
 
   }
