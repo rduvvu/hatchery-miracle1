@@ -27,6 +27,16 @@ export class DriverCheckinPage {
 
   ionViewWillEnter() {
     this.getDriversList('');
+    const checkinBoolean = sessionStorage.getItem('moveToDriverCheckin');
+    if (checkinBoolean === 'true') {
+      this.driversStatus = true;
+      if (this.driversList.length === 0) {
+      sessionStorage.removeItem('moveToDriverCheckin');
+    }
+    } else {
+      this.driversStatus = false;
+    }
+
   }
    getDriversList(searchTerm: string) {
     this.isSubmitting = true;

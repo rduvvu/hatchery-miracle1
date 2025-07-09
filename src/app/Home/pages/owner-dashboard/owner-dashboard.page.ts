@@ -19,6 +19,7 @@ export class OwnerDashboardPage implements OnInit {
   roundsCompletedList: any[] = [];
   activeTab: 'available' | 'checkedIn' | 'completed' = 'available';
   disableNewRoundButton = false;
+  moveToDriverCheckin = false;
   constructor(
     private router: Router,
     public apiService: ApiServiceService,
@@ -91,40 +92,47 @@ export class OwnerDashboardPage implements OnInit {
   openRoundDetails(value:any) {
     console.log('Open round details dialog clicked', value);
     let roundNumber = value.match(/\d+/);
-    this.router.navigate(['/round-details'], {
+    this.router.navigate(['/tabs/rounds'], {
       queryParams: { round : roundNumber ? parseInt(roundNumber[0], 10) : null },
     });
   }
 
   startNewRound(){
     console.log(this.availableDriversList, 'Available Drivers List');
-    if(this.availableDriversList.length === 0) {
-    const userId = sessionStorage.getItem('userId');
-    const url = `${apis.newRound}?ownerId=${userId}`;
+    // if(this.availableDriversList.length === 0) {
+    // const userId = sessionStorage.getItem('userId');
+    // const url = `${apis.newRound}?ownerId=${userId}`;
 
-    this.apiService.postApi(url, {}).subscribe({
-      next: (res: any) => {
-        this.isSubmitting = false;
-        if (res === null || res === undefined) {
-          if (res.success !== true) {
-            throw new Error('Failed to fetch driver details');
-          } else if (!res) {
-            throw new Error('No data found');
-          }
-        } else {
-            if (res.success === false && res.message) {
-            this.presentToast(res.message, 'danger');
-            } else {
-            this.presentToast('New round started successfully!', 'success');
-            this.getDriversStatusDetails();
-            }
+    // this.apiService.postApi(url, {}).subscribe({
+    //   next: (res: any) => {
+    //     this.isSubmitting = false;
+    //     if (res === null || res === undefined) {
+    //       if (res.success !== true) {
+    //         throw new Error('Failed to fetch driver details');
+    //       } else if (!res) {
+    //         throw new Error('No data found');
+    //       }
+    //     } else {
+    //         if (res.success === false && res.message) {
+    //         this.presentToast(res.message, 'danger');
+    //         } else {
+    //         this.presentToast('New round started successfully!', 'success');
+    //         this.getDriversStatusDetails();
+    //         }
 
-        }
-      },
-      error: (err: any) => {
-        console.error('Error fetching Driver Details:', err);
-      },
-    });
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     console.error('Error fetching Driver Details:', err);
+    //   },
+    // });
+    // }
+    if(this.availableDriversList.length !== 0) {
+      this.moveToDriverCheckin = true;
+      sessionStorage.setItem("moveToDriverCheckin", this.moveToDriverCheckin.toString());
+      this.router.navigate(['/tabs/checkin']);
+      //this.presentToast('No drivers available for a new round', 'warning');
+     // return;
     }
 
   }

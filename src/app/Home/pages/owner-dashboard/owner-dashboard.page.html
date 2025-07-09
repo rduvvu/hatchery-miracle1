@@ -2,8 +2,8 @@
   <!-- Header -->
   <div class="flex justify-between items-center mb-4">
     <div>
-      <h1 class="text-1xl font-semibold">Hatchery Management Dashboard</h1>
-      <p class="text-sm text-gray-600">Manage driver check-ins and rotations</p>
+      <h1 class="text-2xl font-semibold">Hatchery Management Dashboard</h1>
+      <p class="text-md text-gray-600">Manage driver check-ins and rotations</p>
     </div>
   </div>
 
@@ -115,9 +115,9 @@
         <p class="font-semibold">{{ d.driverName.toUpperCase()}}</p>
         <!-- <button class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700" (click)="changeDriverStatus(d)">Check-In</button> -->
       </div>
-      <p class="text-sm text-gray-600"><b>Phone:</b> {{ d.phoneNumber }}</p>
-      <p class="text-sm text-gray-600"><b>License:</b> {{ d.licenseNumber }}</p>
       <p class="text-sm text-gray-600"><b>Owner Name:</b> {{ d.ownerName }}</p>
+      <p class="text-sm text-gray-600"><b>Phone:</b> {{ d.phoneNumber }}</p>
+       <p class="text-sm text-gray-700"><b>Vehicle Number: </b> {{ d.vehicleNumber === null ? '-' : d.vehicleNumber }}</p>
     </div>
   </ng-container>
   <ng-template #noAvailable><p>No available drivers</p></ng-template>
@@ -132,9 +132,9 @@
         <p class="font-semibold">{{ d.driverName.toUpperCase() }}</p>
         <!-- <button class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700">Completed</button> -->
       </div>
-      <p class="text-sm text-gray-600"><b>Phone:</b> {{ d.phoneNumber }}</p>
-      <p class="text-sm text-gray-600"><b>License:</b> {{ d.licenseNumber }}</p>
       <p class="text-sm text-gray-600"><b>Owner Name:</b> {{ d.ownerName }}</p>
+      <p class="text-sm text-gray-600"><b>Phone:</b> {{ d.phoneNumber }}</p>
+       <p class="text-sm text-gray-700"><b>Vehicle Number: </b> {{ d.vehicleNumber === null ? '-' : d.vehicleNumber }}</p>
     </div>
   </ng-container>
   <ng-template #noCheckedIn><p>No checked-in drivers</p></ng-template>

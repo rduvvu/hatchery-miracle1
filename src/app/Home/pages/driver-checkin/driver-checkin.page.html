@@ -34,10 +34,14 @@
         <p class="font-semibold">{{ driver.driverName.toUpperCase()}}</p>
         <button class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700 ml-4" (click)="changeDriverStatus(driver)">{{!driversStatus?'Available':'Check-In'}}</button>
       </div>
+      <p class="text-sm text-gray-700"><b>Owner Name:</b>  {{ driver.ownerName }}</p>
       <p class="text-sm text-gray-700"><b>Phone:</b> {{ driver.phoneNumber}}</p>
       <p class="text-sm text-gray-700"><b>Vehicle Number: </b> {{ driver.vehicleNumber === null ? '-' : driver.vehicleNumber }}</p>
-      <p class="text-sm text-gray-700"><b>License Number:</b>  {{ driver.licenseNumber }}</p>
     </div>
+     <div *ngIf="driversList.length === 0" class="text-center text-gray-500 mt-8 text-lg">
+    No drivers for Check-In
   </div>
+  </div>
+
 
 </div>

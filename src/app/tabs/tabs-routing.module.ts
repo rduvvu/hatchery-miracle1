@@ -27,6 +27,10 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('../Home/pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
+      {
+        path: 'rounds',
+        loadChildren: () => import('../Home/pages/round-details/round-details.module').then(m => m.RoundDetailsPageModule)
+      },
        {
         path: '',
         redirectTo: '/tabs/home',  // 👈 Default route when /tabs is accessed
