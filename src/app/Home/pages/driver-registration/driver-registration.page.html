@@ -11,20 +11,20 @@
     Register to join the Hatchery driver rotation system
   </p>
 
-  <form (submit)="registerDriver()" class="space-y-4">
+  <form  [formGroup]="driverRegisterForm" (submit)="registerDriver()" class="space-y-4">
     <div>
       <label class="block text-sm font-medium text-gray-700">Driver Name *</label>
-      <input
+      <ion-input
         type="text"
-        [(ngModel)]="driver.fullName"
+       formControlName="fullName"
         name="fullName"
-        #fullName="ngModel"
+        (ionInput)="onInputLimit($event)"
         required
         minlength="3"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-      />
+      ></ion-input>
       <p
-        *ngIf="fullName.invalid && fullName.touched"
+        *ngIf="this.driverRegisterForm.get('fullName')?.invalid && this.driverRegisterForm.get('fullName')?.touched"
         class="text-red-600 text-xs"
       >
         Full name is required (min 3 characters).
@@ -35,17 +35,17 @@
       <label class="block text-sm font-medium text-gray-700"
         >Owner Name *</label
       >
-      <input
+     <ion-input
         type="email"
         name="ownerName"
-        [(ngModel)]="driver.ownerName"
-        #ownerName="ngModel"
+        formControlName="ownerName"
+         (ionInput)="onInputLimit($event)"
         required
         minlength="3"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-      />
+      ></ion-input>
       <p
-        *ngIf="ownerName.invalid && ownerName.touched"
+        *ngIf="this.driverRegisterForm.get('ownerName')?.invalid && this.driverRegisterForm.get('ownerName')?.touched"
         class="text-red-600 text-xs"
       >
         Owner name is required (min 3 characters).
@@ -56,34 +56,46 @@
       <label class="block text-sm font-medium text-gray-700"
         >Driver Phone Number *</label
       >
-      <input
+      <ion-input
         type="tel"
-        name="phone"
-        [(ngModel)]="driver.phone"
-        #phone="ngModel"
-        required
-        pattern="^[0-9]{10}$"
+
+        inputmode="numeric" maxlength="12"
+           fill="outline" formControlName="phone"
+          (ionInput)="onPhoneInput($event)"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-      />
-      <p *ngIf="phone.invalid && phone.touched" class="text-red-600 text-xs">
-        Enter a valid 10-digit phone number.
-      </p>
+      ></ion-input>
+           <ion-text color="danger"
+              *ngIf="driverRegisterForm.get('phone')?.invalid && (driverRegisterForm.get('phone')?.dirty || driverRegisterForm.get('phone')?.touched) ">
+              <small class="text-xs text-red-600 ml-2"
+                *ngIf="driverRegisterForm.get('phone')?.errors?.['required']">
+                Phone Number is required.
+              </small>
+<small class="text-xs text-red-600 ml-2"
+                *ngIf="driverRegisterForm.get('phone')?.errors?.['startsWithInvalid']">
+                Enter a valid phone number starting with 6–9 (e.g.,
+                987-654-3210).
+              </small>
+              <small class="text-xs text-red-600 ml-2"
+                *ngIf="driverRegisterForm.get('phone')?.errors?.['lengthInvalid']">
+                Phone number must be exactly 10 digits long.
+              </small>
+           </ion-text>
     </div>
+
     <div>
       <label class="block text-sm font-medium text-gray-700"
         >Driver’s License Number *</label
       >
-      <input
+     <ion-input
         type="text"
         name="licenseNumber"
-        [(ngModel)]="driver.licenseNumber"
-        #licenseNumber="ngModel"
+       formControlName="licenseNumber"
         required
         minlength="5"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-      />
+    ></ion-input>
       <p
-        *ngIf="licenseNumber.invalid && licenseNumber.touched"
+        *ngIf="this.driverRegisterForm.get('licenseNumber')?.invalid && this.driverRegisterForm.get('licenseNumber')?.touched"
         class="text-red-600 text-xs"
       >
         License number is required (min 5 characters).
@@ -93,17 +105,16 @@
       <label class="block text-sm font-medium text-gray-700"
         >Driver’s Vehicle Number *</label
       >
-      <input
+      <ion-input
         type="text"
         name="vehicleNumber"
-        [(ngModel)]="driver.vehicleNumber"
-        #vehicleNumber="ngModel"
+        formControlName="vehicleNumber"
         required
         minlength="5"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-      />
+      ></ion-input>
       <p
-        *ngIf="vehicleNumber.invalid && vehicleNumber.touched"
+        *ngIf="this.driverRegisterForm.get('vehicleNumber')?.invalid && this.driverRegisterForm.get('vehicleNumber')?.touched"
         class="text-red-600 text-xs"
       >
         Vehicle Number is required (min 5 characters).
@@ -113,9 +124,8 @@
   <label class="block text-sm font-medium text-gray-700">Truck Type *</label>
   <ion-select
     placeholder="Select truck type"
-    [(ngModel)]="driver.truckType"
+    formControlName="truckType"
     name="truckType"
-    #truckType="ngModel"
     required
     class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
   >
@@ -123,14 +133,12 @@
       {{ type }}
     </ion-select-option>
   </ion-select>
-  <p *ngIf="truckType.invalid && truckType.touched" class="text-red-600 text-xs mt-1">
+  <p *ngIf="this.driverRegisterForm.get('truckType')?.invalid && this.driverRegisterForm.get('truckType')?.touched" class="text-red-600 text-xs mt-1">
     Please select a truck type.
   </p>
 </div>
 
-
-
-    <button
+    <button [disabled]="!driverRegisterForm.valid " (click)="registerDriver()"
       type="submit"
       class="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900 transition-colors"
     >
