@@ -7,14 +7,16 @@ import { Router } from '@angular/router';
   standalone: false
 })
 export class ProfilePage implements OnInit {
-  user = {
-    fullName: 'Sairaj Kumar',
-    mobile: '+91 9876543210',
-    email: 'sairaj@example.com'
-  };
+  user: any= {}
   constructor( private router: Router) { }
 
   ngOnInit() {
+  }
+    ionViewWillEnter() {
+  const profile = sessionStorage.getItem('userInfo');
+  this.user = profile ? JSON.parse(profile) : this.user;
+  console.log( this.user,"21");
+
   }
 
    logout() {

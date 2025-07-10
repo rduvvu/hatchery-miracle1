@@ -10,9 +10,9 @@
 
   <!-- Profile Info -->
   <div class="mt-6 text-center">
-    <h2 class="text-xl font-semibold text-gray-800">{{ user.fullName }}</h2>
-    <p class="text-sm text-gray-600 mt-1">{{ user.mobile }}</p>
-    <p class="text-sm text-gray-600">{{ user.email }}</p>
+    <h2 class="text-xl font-semibold text-gray-800">{{ user.name }}</h2>
+    <p class="text-sm text-gray-600 mt-1"><b>Phone:</b> {{ user.phoneNumber }}</p>
+    <p class="text-sm text-gray-600"><b>VehicleType:</b> {{ user.vehicletype}}</p>
   </div>
 
   <!-- Logout Button -->
@@ -24,5 +24,9 @@
       <ion-icon name="log-out-outline" class="text-xl mr-2 align-middle"></ion-icon>
       Logout
     </button>
+  </div>
+  <div class="mt-4 text-center text-gray-500">
+    <p class="text-sm">Version 1.0.0</p>
+    <p class="text-xs">© 2025 TruckTurner. All rights reserved.</p>
   </div>
 </ion-content>

@@ -28,6 +28,7 @@ export class OwnerLoginPage implements OnInit {
 
       if (response.success === true) {
         sessionStorage.setItem("userId", response.userId);
+        sessionStorage.setItem("userInfo", JSON.stringify(response));
         this.presentToast("Login successful!","success")
         this.router.navigate(['/tabs']);
       } else {

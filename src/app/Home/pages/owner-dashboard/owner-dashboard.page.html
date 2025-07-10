@@ -1,4 +1,4 @@
-<div class="p-4 sm:p-6 max-w-6xl mx-auto">
+<div class="p-4 sm:p-6 max-w-6xl mx-auto w-full">
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-4">
@@ -123,9 +123,10 @@
         <div class="flex justify-between items-start">
           <p class="font-semibold">{{ d.driverName.toUpperCase() }}</p>
         </div>
-        <p class="text-sm text-gray-600"><b>Owner Name:</b> {{ d.ownerName }}</p>
-        <p class="text-sm text-gray-600"><b>Phone:</b> {{ d.phoneNumber }}</p>
+        <p class="text-sm text-gray-700"><b>Owner Name:</b> {{ d.ownerName }}</p>
+        <p class="text-sm text-gray-700"><b>Phone:</b> {{ d.phoneNumber }}</p>
         <p class="text-sm text-gray-700"><b>Vehicle Number: </b> {{ d.vehicleNumber === null ? '-' : d.vehicleNumber }}</p>
+        <p class="text-sm text-gray-700"><b>Drop Location:</b> {{ d.dropLocation }}</p>
       </div>
     </ng-container>
     <ng-template #noCheckedIn><p>No checked-in drivers</p></ng-template>

@@ -11,10 +11,15 @@ import { CommonModule } from '@angular/common';
 })
 export class DropLocationModalPage {
   @Input() dropLocations: string[] = [];
-  selectedLocation = '';
+  inputValue: string = '';
+  isInputValid: boolean = false;
+  selectedLocation: string = '';
 
   constructor(private modalController: ModalController) {}
 
+  onInputChange() {
+  this.isInputValid = this.selectedLocation.trim().length > 0;
+}
   confirm() {
     this.modalController.dismiss({ selectedLocation: this.selectedLocation });
   }

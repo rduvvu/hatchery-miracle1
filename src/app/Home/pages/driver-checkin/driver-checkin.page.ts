@@ -20,6 +20,7 @@ export class DriverCheckinPage {
   driversStatus: boolean = false;
   filteredDrivers : any[] = [];
   availableCount: number = 0;
+  skipDriver: boolean = false;
 
   constructor(public modalController: ModalController, private router: Router, public apiService: ApiServiceService,private toastController: ToastController,private alertController: AlertController) {}
 
@@ -67,10 +68,19 @@ export class DriverCheckinPage {
   }
 
 async changeDriverStatus(driver: any) {
-  const modal = await this.modalController.create({
+ const modal = await this.modalController.create({
     component: DropLocationModalPage,
     componentProps: {
-      dropLocations: this.dropLoactions
+      dropLocations: this.dropLoactions},
+   breakpoints: [0, 0.25, 0.5],       // define sheet heights
+    initialBreakpoint: 0.25,          // open at 25% of screen height
+    cssClass: 'bottom-sheet-modal',   // optional styling
+    backdropDismiss: true
+  });
+
+  modal.onDidDismiss().then((res) => {
+    if (res.data) {
+      console.log('Input value:', res.data);
     }
   });
 
@@ -108,6 +118,53 @@ async changeDriverStatus(driver: any) {
     const term = this.searchTerm.toLowerCase();
     this.getDriversList(term)
   }
+skipDriverCurrentRound(driver: any) {
+  this.alertController.create({
+    header: `Select a reason to skip ${driver.driverName}`,
+    inputs: [
+      {
+        type: 'radio',
+        label: 'Driver unavailable',
+        value: 'Driver unavailable',
+        checked: true
+      },
+      {
+        type: 'radio',
+        label: 'Vehicle issue',
+        value: 'Vehicle issue'
+      },
+      {
+        type: 'radio',
+        label: 'Personal request',
+        value: 'Personal request'
+      },
+      {
+        type: 'radio',
+        label: 'Other',
+        value: 'Other'
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+      },
+      {
+        text: 'Skip',
+        cssClass: 'primary',
+        handler: (data) => {
+          console.log(`Skipping driver ${driver.driverName} for reason: ${data}`);
+          this.skipDriver = true;
+          // Your skip logic here
+        }
+      }
+    ]
+  }).then(alertEl => alertEl.present());
+}
+
+
+
 
   async presentToast(message: string, color: string = 'success') {
     const toast = await this.toastController.create({
