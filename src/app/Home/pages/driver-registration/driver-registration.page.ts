@@ -53,6 +53,7 @@ export class DriverRegistrationPage implements OnInit {
         "vehicleType": this.driver.truckType,
         "licenseNumber": this.driver.licenseNumber,
         "vehicleNumber": this.driver.vehicleNumber,
+        "ownerId": 15
       };
 
       this.apiService.postApi(`${apis.driverRegister}`, reqBody).subscribe((response) => {
