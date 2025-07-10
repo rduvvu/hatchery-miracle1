@@ -13,6 +13,7 @@ import { ToastController } from '@ionic/angular';
 export class OwnerLoginPage implements OnInit {
   username = '';
   password = '';
+  showPassword = true;
   constructor(private router: Router,private apiService: ApiServiceService,private toastController: ToastController) { }
 
   ngOnInit() {

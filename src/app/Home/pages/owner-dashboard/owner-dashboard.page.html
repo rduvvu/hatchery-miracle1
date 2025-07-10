@@ -56,9 +56,9 @@
     >
       <div class="flex items-center gap-4 mb-2">
         <button
-        [ngClass]="availableDriversList.length === 0 ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-green-700 text-white px-4 py-2 rounded'"
+        [ngClass]="availableDriversList.length === 0 || disableNewRoundButton? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-green-700 text-white px-4 py-2 rounded'"
           (click)="startNewRound()"
-          [disabled]="availableDriversList.length == 0 && !moveToDriverCheckin "
+          [disabled]="(availableDriversList.length == 0 && !moveToDriverCheckin) || disableNewRoundButton"
           >
           Start New Check-in Round
         </button>
@@ -72,13 +72,13 @@
         </button>
 
       </div>
-      <p class="text-sm text-gray-500">No active check-in round. Start a new round to allow check-ins.</p>
+      <!-- <p class="text-sm text-gray-500">No active check-in round. Start a new round to allow check-ins.</p> -->
     </div>
   </div>
 
   <!-- Driver Lists -->
 <div class="mb-4 border-b border-gray-200">
-  <ul class="flex -mb-px text-sm font-medium text-center">
+  <ul class="flex -mb-px text-md font-medium text-center">
     <li class="mr-2">
       <button (click)="activeTab = 'available'"
         [ngClass]="{

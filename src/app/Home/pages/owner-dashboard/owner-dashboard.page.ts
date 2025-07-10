@@ -20,6 +20,7 @@ export class OwnerDashboardPage implements OnInit {
   activeTab: 'available' | 'checkedIn' | 'completed' = 'available';
   disableNewRoundButton = false;
   moveToDriverCheckin = false;
+
   constructor(
     private router: Router,
     public apiService: ApiServiceService,
@@ -129,12 +130,14 @@ export class OwnerDashboardPage implements OnInit {
     // }
     if(this.availableDriversList.length !== 0) {
       this.moveToDriverCheckin = true;
+      this.disableNewRoundButton = true;
       sessionStorage.setItem("moveToDriverCheckin", this.moveToDriverCheckin.toString());
       this.router.navigate(['/tabs/checkin']);
       //this.presentToast('No drivers available for a new round', 'warning');
      // return;
     }else{
       this.moveToDriverCheckin = false;
+      this.disableNewRoundButton = false;
     }
 
   }

@@ -52,10 +52,10 @@ export class DriverRegistrationPage implements OnInit {
       const reqBody = {
         "driverName": formData?.fullName,
         "ownerName": formData?.ownerName,
-        "phoneNumber": formData?.phone,
-        "vehicleType": formData?.truckType,
+        "phoneNumber": formData?.phone?.replace(/\D/g, ''),
         "licenseNumber": formData?.licenseNumber,
         "vehicleNumber": formData?.vehicleNumber,
+        "vehicleType": formData?.truckType,
         "ownerId": 15,
       };
       console.log('Request Body:', reqBody);
@@ -107,6 +107,21 @@ export class DriverRegistrationPage implements OnInit {
 	onInputLimit(event: any,formValue:any): void {
     const input = event.target.value || '';
     const filtered = input.replace(/[^A-Za-z]/g, ''); // Allow only letters
+    const control = this.driverRegisterForm.get(formValue);
+    if (input !== filtered) {
+      event.target.value = filtered;
+    }
+    // Update form control
+    control?.setValue(filtered, { emitEvent: false });
+    // Show error if length reached
+    if (filtered.length >= 35) {
+      control?.markAsTouched();
+      control?.updateValueAndValidity();
+    }
+  }
+  onInputNumberLimit(event: any,formValue:any): void {
+    const input = event.target.value || '';
+    const filtered = input.replace(/[^A-Za-z0-9]/g, ''); // Allow only letters
     const control = this.driverRegisterForm.get(formValue);
     if (input !== filtered) {
       event.target.value = filtered;

@@ -91,6 +91,7 @@
         name="licenseNumber"
        formControlName="licenseNumber"
         required
+         (ionInput)="onInputNumberLimit($event,'licenseNumber')"
         minlength="5"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
     ></ion-input>
@@ -110,6 +111,7 @@
         name="vehicleNumber"
         formControlName="vehicleNumber"
         required
+        (ionInput)="onInputNumberLimit($event,'vehicleNumber')"
         minlength="5"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
       ></ion-input>
@@ -121,9 +123,9 @@
       </p>
     </div>
 <div class="w-full max-w-xs">
-  <label class="block text-sm font-medium text-gray-700">Truck Type *</label>
+  <label class="block text-sm font-medium text-gray-700">Vehicle Type *</label>
   <ion-select
-    placeholder="Select truck type"
+    placeholder="Select vehicle type"
     formControlName="truckType"
     name="truckType"
     required
@@ -134,11 +136,11 @@
     </ion-select-option>
   </ion-select>
   <p *ngIf="this.driverRegisterForm.get('truckType')?.invalid && this.driverRegisterForm.get('truckType')?.touched" class="text-red-600 text-xs mt-1">
-    Please select a truck type.
+    Please select a vehicle type.
   </p>
 </div>
 
-    <button [disabled]="!driverRegisterForm.valid " (click)="registerDriver()"
+    <button  (click)="registerDriver()"
       type="submit"
       class="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900 transition-colors"
     >
