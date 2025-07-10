@@ -18,7 +18,7 @@
         type="text"
        formControlName="fullName"
         name="fullName"
-        (ionInput)="onInputLimit($event)"
+        (ionInput)="onInputLimit($event,'fullName')"
         required
         minlength="3"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
@@ -39,7 +39,7 @@
         type="email"
         name="ownerName"
         formControlName="ownerName"
-         (ionInput)="onInputLimit($event)"
+         (ionInput)="onInputLimit($event,'ownerName')"
         required
         minlength="3"
         class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
