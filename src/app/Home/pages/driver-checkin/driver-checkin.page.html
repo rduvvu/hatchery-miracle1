@@ -33,10 +33,6 @@
   <div class="overflow-y-scroll h-[52vh]">
     <div
       *ngFor="let driver of driversList"
-      [ngClass]="{
-      'bg-[#b7b2b3] border-[#b7b2b3]': skipDriver,
-      'bg-green-50 border-green-300': !skipDriver
-    }"
       class="bg-green-50 rounded-lg p-4 mb-4 border"
     >
       <div class="flex justify-between items-center mb-2">
@@ -45,14 +41,13 @@
         <div class="flex gap-2 ml-auto">
           <button
             class="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-900"
-            [disabled]="!driversStatus"
             (click)="changeDriverStatus(driver)"
           >
-            {{ !driversStatus ? 'Available' : 'Check-In' }}
+            {{ driversList.length !== availableCount ? 'Available' : 'Check-In' }}
           </button>
 
           <button
-            *ngIf="driversStatus"
+            *ngIf="driversList.length == availableCount"
             class="bg-[#0d416b] text-white text-xs px-3 py-1 rounded hover:bg-[#0d416b] hover:opacity-90"
             (click)="skipDriverCurrentRound(driver)"
           >

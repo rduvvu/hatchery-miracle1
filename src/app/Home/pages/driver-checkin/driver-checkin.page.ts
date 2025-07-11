@@ -6,26 +6,41 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { DropLocationModalPage } from './drop-location-modal/drop-location-modal.page';
 
-
 @Component({
   selector: 'app-driver-checkin',
   templateUrl: './driver-checkin.page.html',
-   standalone: false
+  standalone: false,
 })
 export class DriverCheckinPage {
   searchTerm: string = '';
-  isSubmitting:boolean = false;
-  driversList:any[] = [];
-  dropLoactions: any[] = [ 'Gantyada', 'Poosapatirega', 'Denkada', 'Bhogapuram', 'Srungavarapukota', 'Jami', 'Vepada', 'Lakkavarapukota', 'Kothavalasa', 'Bondapalli'];
+  isSubmitting: boolean = false;
+  driversList: any[] = [];
+  dropLoactions: any[] = [
+    'Gantyada',
+    'Poosapatirega',
+    'Denkada',
+    'Bhogapuram',
+    'Srungavarapukota',
+    'Jami',
+    'Vepada',
+    'Lakkavarapukota',
+    'Kothavalasa',
+    'Bondapalli',
+  ];
   driversStatus: boolean = false;
-  filteredDrivers : any[] = [];
+  filteredDrivers: any[] = [];
   availableCount: number = 0;
   skipDriver: boolean = false;
 
-  constructor(public modalController: ModalController, private router: Router, public apiService: ApiServiceService,private toastController: ToastController,private alertController: AlertController) {}
+  constructor(
+    public modalController: ModalController,
+    private router: Router,
+    public apiService: ApiServiceService,
+    private toastController: ToastController,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {}
-
 
   ionViewWillEnter() {
     this.getDriversList('');
@@ -33,17 +48,18 @@ export class DriverCheckinPage {
     if (checkinBoolean === 'true') {
       this.driversStatus = true;
       if (this.driversList.length === 0) {
-      sessionStorage.setItem("moveToDriverCheckin", 'false');
-    }
+        sessionStorage.setItem('moveToDriverCheckin', 'false');
+      }
     } else {
       this.driversStatus = false;
     }
-
   }
-   getDriversList(searchTerm: string) {
+  getDriversList(searchTerm: string) {
     this.isSubmitting = true;
     const userId = sessionStorage.getItem('userId');
-    const url = `${apis.availableDriversListForCheckIn}?ownerId=${userId}&searchText=${searchTerm? searchTerm : ''}`;
+    const url = `${
+      apis.availableDriversListForCheckIn
+    }?ownerId=${userId}&searchText=${searchTerm ? searchTerm : ''}`;
 
     this.apiService.getApi(url).subscribe({
       next: (res: any) => {
@@ -58,7 +74,6 @@ export class DriverCheckinPage {
           this.driversList = res.availableDrivers || [];
           this.availableCount = res.availableCount || 0;
           console.log('Drivers fetched successfully:', this.driversList);
-
         }
       },
       error: (err: any) => {
@@ -67,104 +82,148 @@ export class DriverCheckinPage {
     });
   }
 
-async changeDriverStatus(driver: any) {
- const modal = await this.modalController.create({
-    component: DropLocationModalPage,
-    componentProps: {
-      dropLocations: this.dropLoactions},
-   breakpoints: [0, 0.25, 0.5],       // define sheet heights
-    initialBreakpoint: 0.25,          // open at 25% of screen height
-    cssClass: 'bottom-sheet-modal',   // optional styling
-    backdropDismiss: true
-  });
-
-  modal.onDidDismiss().then((res) => {
-    if (res.data) {
-      console.log('Input value:', res.data);
-    }
-  });
-
-  await modal.present();
-
-  const { data } = await modal.onWillDismiss();
-  const userId = parseInt(sessionStorage.getItem('userId') || '', 10);
-
-  if (data?.selectedLocation) {
-    const reqBody = {
-      userId: driver.id,
-      vehicleNumber: driver.vehicleNumber,
-      hatcheryId: driver.hatcheryId,
-      ownerId: driver.ownerId,
-      dropLocation: data.selectedLocation
-    };
-
-    this.apiService.postApi(`${apis.driverCheckinFromAvailableList}`, reqBody).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.presentToast('Checked-in successfully!', 'success');
-          this.getDriversList('');
-        } else {
-          this.presentToast(`${driver.driverName}: Unable to check-in.`, 'danger');
-        }
+  async changeDriverStatus(driver: any) {
+    const modal = await this.modalController.create({
+      component: DropLocationModalPage,
+      componentProps: {
+        dropLocations: this.dropLoactions,
       },
-      error: () => {
-        this.presentToast('Network error. Please try again.', 'danger');
+      breakpoints: [0, 0.25, 0.5], // define sheet heights
+      initialBreakpoint: 0.25, // open at 25% of screen height
+      cssClass: 'bottom-sheet-modal', // optional styling
+      backdropDismiss: true,
+    });
+
+    modal.onDidDismiss().then((res) => {
+      if (res.data) {
+        console.log('Input value:', res.data);
       }
     });
-  }
-}
 
-    filterDrivers() {
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data?.selectedLocation) {
+      const reqBody = {
+        userId: driver.id,
+        vehicleNumber: driver.vehicleNumber,
+        hatcheryId: driver.hatcheryId,
+        ownerId: driver.ownerId,
+        dropLocation: data.selectedLocation,
+        skipReason: data.skipReason || '',
+      };
+
+      this.apiService
+        .postApi(`${apis.driverCheckinFromAvailableList}`, reqBody)
+        .subscribe({
+          next: (response) => {
+            if (response.success) {
+              this.presentToast('Checked-in successfully!', 'success');
+              this.getDriversList('');
+            } else {
+              this.presentToast(
+                `${driver.driverName}: Unable to check-in.`,
+                'danger'
+              );
+            }
+          },
+          error: () => {
+            this.presentToast('Network error. Please try again.', 'danger');
+          },
+        });
+    }
+  }
+
+  filterDrivers() {
     const term = this.searchTerm.toLowerCase();
-    this.getDriversList(term)
+    this.getDriversList(term);
   }
-skipDriverCurrentRound(driver: any) {
-  this.alertController.create({
-    header: `Select a reason to skip ${driver.driverName}`,
-    inputs: [
-      {
-        type: 'radio',
-        label: 'Driver unavailable',
-        value: 'Driver unavailable',
-        checked: true
-      },
-      {
-        type: 'radio',
-        label: 'Vehicle issue',
-        value: 'Vehicle issue'
-      },
-      {
-        type: 'radio',
-        label: 'Personal request',
-        value: 'Personal request'
-      },
-      {
-        type: 'radio',
-        label: 'Other',
-        value: 'Other'
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        cssClass: 'secondary',
-      },
-      {
-        text: 'Skip',
-        cssClass: 'primary',
-        handler: (data) => {
-          console.log(`Skipping driver ${driver.driverName} for reason: ${data}`);
-          this.skipDriver = true;
-          // Your skip logic here
-        }
-      }
-    ]
-  }).then(alertEl => alertEl.present());
-}
+  skipDriverCurrentRound(driver: any) {
+    this.alertController
+      .create({
+        header: `Select a reason to skip ${driver.driverName}`,
+        inputs: [
+          {
+            type: 'radio',
+            label: 'Driver unavailable',
+            value: 'Driver unavailable',
+            checked: true,
+          },
+          {
+            type: 'radio',
+            label: 'Vehicle issue',
+            value: 'Vehicle issue',
+          },
+          {
+            type: 'radio',
+            label: 'Personal request',
+            value: 'Personal request',
+          },
+          {
+            type: 'radio',
+            label: 'Other',
+            value: 'Other',
+          },
+        ],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+          },
+          {
+            text: 'Skip',
+            cssClass: 'primary',
+            handler: (data) => {
+              console.log(
+                `Skipping driver ${driver.driverName} for reason: ${data}`
+              );
+              this.skipDriver = true;
+              if (data !== '') {
+                const reqBody = {
+                  userId: driver.id,
+                  vehicleNumber: driver.vehicleNumber,
+                  hatcheryId: driver.hatcheryId,
+                  ownerId: driver.ownerId,
+                  dropLocation: data.selectedLocation,
+                  skipReason: data || '',
+                  status: 'skip',
+                };
+                console.log('Request Body:', reqBody);
 
-
-
+                this.apiService
+                  .postApi(`${apis.driverCheckinFromAvailableList}`, reqBody)
+                  .subscribe({
+                    next: (response) => {
+                      if (response.success) {
+                        this.presentToast(
+                          'Checked-in successfully!',
+                          'success'
+                        );
+                        this.getDriversList('');
+                      } else {
+                        this.presentToast(
+                          `${driver.driverName}: Unable to check-in.`,
+                          'danger'
+                        );
+                      }
+                    },
+                    error: () => {
+                      this.presentToast(
+                        'Network error. Please try again.',
+                        'danger'
+                      );
+                    },
+                  });
+              }
+              // Your skip logic here
+            },
+          },
+        ],
+      })
+      .then((alertEl) => alertEl.present());
+  }
 
   async presentToast(message: string, color: string = 'success') {
     const toast = await this.toastController.create({
@@ -175,4 +234,4 @@ skipDriverCurrentRound(driver: any) {
     });
     await toast.present();
   }
-  }
+}

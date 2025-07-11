@@ -12,7 +12,7 @@ import { ToastController } from '@ionic/angular';
 export class OwnerDashboardPage implements OnInit {
   isSubmitting = false;
   checkinAccordionOpen = true;
-  driverStatusDetails: any;
+  driverStatusDetails: any={};
   availableDriversList: any[] = [];
   checkedInDriversList: any[] = [];
   completedDriversList: any[] = [];
