@@ -105,10 +105,12 @@ export class DriverCheckinPage {
     const { data } = await modal.onWillDismiss();
 
     if (data?.selectedLocation) {
+      console.log(driver, 'Driver Details');
+
       const reqBody = {
         userId: driver.id,
         vehicleNumber: driver.vehicleNumber,
-        hatcheryId: driver.hatcheryId,
+        hatcheryId: driver.hatcheryId === null ?1: driver.hatcheryId,
         ownerId: driver.ownerId,
         dropLocation: data.selectedLocation,
         skipReason: data.skipReason || '',

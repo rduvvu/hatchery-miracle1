@@ -55,11 +55,8 @@ export class RoundDetailsPage implements OnInit {
           }
         } else {
           this.completedCount = res.completedCount;
-            const start = new Date(res.startDate);
-            const end = new Date(res.endDate);
-            this.roundDate = start.toLocaleDateString();
-            this.startTime = start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-            this.endTime = end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+            this.startTime = res.roundStartTime
+            this.endTime = res.roundEndTime
           this.roundDetailList = res.completedDrivers;
           this.roundId = res.round;
         }

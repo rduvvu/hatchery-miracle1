@@ -139,9 +139,9 @@
     Please select a vehicle type.
   </p>
 </div>
-
     <button  (click)="registerDriver()"
       type="submit"
+      [disabled]="driverRegisterForm.invalid"
       class="w-full bg-green-800 text-white py-2 rounded hover:bg-green-900 transition-colors"
     >
       Register as Driver

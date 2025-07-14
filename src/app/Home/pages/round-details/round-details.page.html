@@ -1,47 +1,72 @@
-<div class="p-6 max-w-3xl mx-auto">
+<div class="p-6 max-w-3xl mx-auto w-full">
   <!-- Icon & Title -->
   <div class="flex flex-col items-center mb-4">
     <div
       class="bg-green-900 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl mb-2"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
-        <circle cx="7.5" cy="14" r="1.5" fill="currentColor"/>
-        <circle cx="16.5" cy="14" r="1.5" fill="currentColor"/>
-        <path d="M3 10h18" stroke="currentColor" stroke-width="2"/>
-        <path d="M7.5 17v1M16.5 17v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <rect x="8.5" y="11.5" width="7" height="2" rx="1" fill="currentColor"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-7 h-7"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <rect
+          x="3"
+          y="7"
+          width="18"
+          height="13"
+          rx="2"
+          stroke="currentColor"
+          stroke-width="2"
+          fill="none"
+        />
+        <circle cx="7.5" cy="14" r="1.5" fill="currentColor" />
+        <circle cx="16.5" cy="14" r="1.5" fill="currentColor" />
+        <path d="M3 10h18" stroke="currentColor" stroke-width="2" />
+        <path
+          d="M7.5 17v1M16.5 17v1"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
+        <rect
+          x="8.5"
+          y="11.5"
+          width="7"
+          height="2"
+          rx="1"
+          fill="currentColor"
+        />
       </svg>
     </div>
     <h2 class="text-2xl font-semibold">Completed Round Details</h2>
     <p class="text-gray-600 text-center mt-1">
       Round ID: <span class="font-semibold">{{ roundId}}</span>
     </p>
-      <p class="text-gray-600 text-center mt-1">
+    <p class="text-gray-600 text-center mt-1">
       Total Drivers: <span class="font-semibold">{{ completedCount }}</span>
     </p>
-
-  </div>
-  <div class="flex flex-wrap justify-between items-center gap-2 mb-4">
-  <!-- <div class="flex flex-col items-center bg-blue-100 border rounded-lg  py-4 shadow">
-    <span class="text-sm text-gray-500"> Date</span>
-    <span class="text-lg font-semibold text-green-800">{{ roundDate | date:'dd/MM/yyyy' }}</span>
-  </div> -->
-  <!-- Start Time -->
-  <div class="flex flex-col items-center bg-blue-100 border rounded-lg px-6 py-4 shadow">
-    <span class="text-sm text-gray-500">Start Time</span>
-    <span class="text-lg font-semibold text-blue-700">{{ startTime }}</span>
   </div>
 
-  <!-- End Time -->
-  <div class="flex flex-col items-center bg-blue-100 border rounded-lg px-6 py-4 shadow">
-    <span class="text-sm text-gray-500">End Time</span>
-    <span class="text-lg font-semibold text-red-600">{{ endTime }}</span>
-  </div>
-</div>
+ <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+    <div class="border rounded-xl p-4 text-center shadow-md">🕒
+      <p class="text-sm text-gray-600 mt-2"><b>Start Time</b></p>
+      <div class="text-xl font-bold text-green-900 flex justify-center items-center gap-2">
+         <span>{{ startTime }}</span>
+      </div>
+    </div>
+    <div class="border rounded-xl p-4 text-center shadow-md">🕒
+      <p class="text-sm text-gray-600 mt-2"><b>End Time</b></p>
+      <div class="text-xl font-bold text-green-600 flex justify-center items-center gap-2">
+         <span>{{ endTime }}</span>
+      </div>
+    </div>
 
-  <!-- Search -->
-  <div class="bg-white  p-1 my-2">
+  </div>
+
+  <!-- Search --
+  <div class="bg-white p-1 my-2">
     <input
       type="text"
       [(ngModel)]="searchTerm"
@@ -56,9 +81,12 @@
     <!-- Summary Badges Row -->
     <div
       *ngFor="let driver of roundDetailList"
-      class="bg-green-50 rounded-lg p-4 mb-4 border"
+      [ngClass]="{
+    'bg-gray-100': driver.status === 'Skip',
+    'bg-green-50': driver.status !== 'Skip'
+  }"
+      class="rounded-lg p-4 mb-4 border"
     >
-
       <div class="flex justify-between items-center mb-2">
         <div class="flex items-center gap-2">
           <span class="text-green-800">🕒</span>
@@ -68,9 +96,18 @@
           >
         </div>
       </div>
-       <p class="text-sm text-gray-700"><b>Owner Name:</b>  {{ driver.ownerName }}</p>
+      <p class="text-sm text-gray-700">
+        <b>Owner Name:</b> {{ driver.ownerName }}
+      </p>
       <p class="text-sm text-gray-700"><b>Phone:</b> {{ driver.phoneNumber}}</p>
-      <p class="text-sm text-gray-700"><b>Vehicle Number: </b> {{ driver.vehicleNumber === null ? '-' : driver.vehicleNumber }}</p>
+      <p class="text-sm text-gray-700">
+        <b>Vehicle Number: </b> {{ driver.vehicleNumber === null ? '-' :
+        driver.vehicleNumber }}
+      </p>
+      <p class="text-sm text-gray-700">
+        <b>Drop Location: </b> {{ driver.dropLocation === null ? '-' :
+        driver.dropLocation }}
+      </p>
     </div>
   </div>
 </div>

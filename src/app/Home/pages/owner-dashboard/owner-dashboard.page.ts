@@ -20,6 +20,7 @@ export class OwnerDashboardPage implements OnInit {
   activeTab: 'available' | 'checkedIn' | 'completed' = 'available';
   disableNewRoundButton = false;
   moveToDriverCheckin = false;
+  enableCompleteRoundButton: boolean=false;
 
   constructor(
     private router: Router,
@@ -99,35 +100,34 @@ export class OwnerDashboardPage implements OnInit {
   }
 
   startNewRound(){
-    console.log(this.availableDriversList, 'Available Drivers List');
-    // if(this.availableDriversList.length === 0) {
-    // const userId = sessionStorage.getItem('userId');
-    // const url = `${apis.newRound}?ownerId=${userId}`;
-
-    // this.apiService.postApi(url, {}).subscribe({
-    //   next: (res: any) => {
-    //     this.isSubmitting = false;
-    //     if (res === null || res === undefined) {
-    //       if (res.success !== true) {
-    //         throw new Error('Failed to fetch driver details');
-    //       } else if (!res) {
-    //         throw new Error('No data found');
-    //       }
-    //     } else {
-    //         if (res.success === false && res.message) {
-    //         this.presentToast(res.message, 'danger');
-    //         } else {
-    //         this.presentToast('New round started successfully!', 'success');
-    //         this.getDriversStatusDetails();
-    //         }
-
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     console.error('Error fetching Driver Details:', err);
-    //   },
-    // });
-    // }
+    //console.log(this.availableDriversList, 'Available Drivers List');
+    if(this.availableDriversList.length === 0) {
+    const userId = sessionStorage.getItem('userId');
+    const url = `${apis.newRound}?ownerId=${userId}`;
+    this.apiService.postApi(url, {}).subscribe({
+      next: (res: any) => {
+        this.isSubmitting = false;
+        if (res === null || res === undefined) {
+          if (res.success !== true) {
+            throw new Error('Failed to fetch driver details');
+          } else if (!res) {
+            throw new Error('No data found');
+          }
+        } else {
+            if (res.success === false && res.message) {
+            this.presentToast(res.message, 'danger');
+            } else {
+            this.presentToast('New round started successfully!', 'success');
+            this.enableCompleteRoundButton = true;
+            this.getDriversStatusDetails();
+            }
+        }
+      },
+      error: (err: any) => {
+        console.error('Error fetching Driver Details:', err);
+      },
+    });
+    }
     if(this.availableDriversList.length !== 0) {
       this.moveToDriverCheckin = true;
       this.disableNewRoundButton = true;
@@ -159,6 +159,7 @@ export class OwnerDashboardPage implements OnInit {
             this.presentToast(res.message, 'danger');
             } else {
             this.presentToast('Successfully updated completed round!', 'success');
+            this.enableCompleteRoundButton = false;
             this.getDriversStatusDetails();
             }
 

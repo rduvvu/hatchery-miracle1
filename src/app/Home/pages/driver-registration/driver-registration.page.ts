@@ -59,15 +59,13 @@ export class DriverRegistrationPage implements OnInit {
         "ownerId": 15,
       };
       console.log('Request Body:', reqBody);
-
-
       this.apiService.postApi(`${apis.driverRegister}`, reqBody).subscribe((response) => {
         if (response.success === true) {
            this.presentToast('Driver Registration successful!', 'success');
           this.router.navigate(['/tabs']);
           this.driver = {}
         } else {
-          alert('Invalid credentials');
+            this.presentToast("Invalid credentials!","danger")
         }
       })
 

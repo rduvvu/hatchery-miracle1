@@ -32,7 +32,7 @@ export class OwnerLoginPage implements OnInit {
         this.presentToast("Login successful!","success")
         this.router.navigate(['/tabs']);
       } else {
-        alert('Invalid credentials');
+          this.presentToast("Invalid credentials!","danger")
       }
     })
   }
