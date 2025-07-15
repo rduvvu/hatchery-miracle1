@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
   user: any= {}
-  constructor( private router: Router) { }
+  constructor( private router: Router, private storage: Storage) { }
 
   ngOnInit() {
   }
@@ -22,6 +23,7 @@ export class ProfilePage implements OnInit {
    logout() {
     this.router.navigate(['/owner-login']);
     sessionStorage.clear();
+    this.storage.clear();
   }
 
 }

@@ -3,6 +3,7 @@ import { ApiServiceService } from 'src/app/services/api-service.service';
 import { apis } from 'src/app/services/apis';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-owner-login',
@@ -14,21 +15,24 @@ export class OwnerLoginPage implements OnInit {
   username = '';
   password = '';
   showPassword = true;
-  constructor(private router: Router,private apiService: ApiServiceService,private toastController: ToastController) { }
+  constructor(private router: Router,private apiService: ApiServiceService,private toastController: ToastController, private storage: Storage) { 
+     this.storage.create();
+  }
 
   ngOnInit() {
   }
-   login() {
+   async login() {
     const reqBody = {
       ownerName: this.username,
       password: this.password
     };
-    this.apiService.postApi(`${apis.ownerLogin}`, reqBody).subscribe((response:any) => {
+    this.apiService.postApi(`${apis.ownerLogin}`, reqBody).subscribe(async (response:any) => {
       console.log('Login response:', response);
 
       if (response.success === true) {
         sessionStorage.setItem("userId", response.userId);
         sessionStorage.setItem("userInfo", JSON.stringify(response));
+        await this.storage.set('isLoggedIn', true);
         this.presentToast("Login successful!","success")
         this.router.navigate(['/tabs']);
       } else {
