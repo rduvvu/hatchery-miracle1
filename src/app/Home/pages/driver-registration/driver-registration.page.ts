@@ -23,12 +23,13 @@ export class DriverRegistrationPage implements OnInit {
     vehicleNumber: '',
   };
   truckTypes: string[] = ['Ape Xtra LDX','Bolero Pik-Up 4x2','Bolero Pik-Up ExtraStrong','Bolero Maxitruck Plus','DCM 4-wheeler', 'DCM Toyota HT', 'DCM 909', 'Tata 407 EX', 'Tata 407 Pickup','Tata 407 Gold SFC','Tata 1109 EX','Tata 1120 LPT','Tata Ace Gold'];
-
+ownerList:any[] = [];
   phoneAlreadyExists: boolean = false;
   constructor(private router: Router,private formBuilder: FormBuilder, private apiService: ApiServiceService,private toastController: ToastController) { }
 
   ngOnInit() {
     this.initFarmerForm();
+    this.getownerList();
   }
 
    initFarmerForm() {
@@ -44,6 +45,11 @@ export class DriverRegistrationPage implements OnInit {
       ]],
     });
   }
+  getownerList() {
+      this.apiService.getApi(`${apis.ownerList}`).subscribe((response) => {
+        this.ownerList = response.owners;
+      })
+  }
   registerDriver() {
     const formData = this.driverRegisterForm?.value;
     // Only proceed if form is valid
@@ -51,12 +57,12 @@ export class DriverRegistrationPage implements OnInit {
       // your API call or logic here
       const reqBody = {
         "driverName": formData?.fullName,
-        "ownerName": formData?.ownerName,
+        "ownerName": formData?.ownerName.ownerName,
         "phoneNumber": formData?.phone?.replace(/\D/g, ''),
         "licenseNumber": formData?.licenseNumber,
         "vehicleNumber": formData?.vehicleNumber,
         "vehicleType": formData?.truckType,
-        "ownerId": 15,
+        "ownerId": formData?.ownerName.id,
       };
       console.log('Request Body:', reqBody);
       this.apiService.postApi(`${apis.driverRegister}`, reqBody).subscribe((response) => {
@@ -65,7 +71,7 @@ export class DriverRegistrationPage implements OnInit {
           this.router.navigate(['/tabs']);
           this.driver = {}
         } else {
-            this.presentToast("Invalid credentials!","danger")
+            this.presentToast("Failed To Register!","danger")
         }
       })
 

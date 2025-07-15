@@ -11,5 +11,7 @@ export const apis = {
   availableDriversListForCheckIn: baseUrl + '/checkin/available-drivers',
   newRound: baseUrl + '/checkin/start-new-round',
   completeCurrentRound: baseUrl + '/checkin/complete-round',
+  ownerRegister: baseUrl + '/users/register',
+  ownerList: baseUrl + '/users/owners'
 }
 

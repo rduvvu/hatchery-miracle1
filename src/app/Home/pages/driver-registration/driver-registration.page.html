@@ -30,28 +30,23 @@
         Full name is required (min 3 characters).
       </p>
     </div>
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700"
-        >Owner Name *</label
-      >
-     <ion-input
-        type="email"
-        name="ownerName"
-        formControlName="ownerName"
-         (ionInput)="onInputLimit($event,'ownerName')"
-        required
-        minlength="3"
-        class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
-      ></ion-input>
-      <p
-        *ngIf="this.driverRegisterForm.get('ownerName')?.invalid && this.driverRegisterForm.get('ownerName')?.touched"
-        class="text-red-600 text-xs"
-      >
-        Owner name is required (min 3 characters).
-      </p>
-    </div>
-
+<div class="w-full max-w-xs">
+  <label class="block text-sm font-medium text-gray-700">Owner Name *</label>
+  <ion-select
+    placeholder="Select owner name"
+    formControlName="ownerName"
+    name="ownerName"
+    required
+    class="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+  >
+    <ion-select-option *ngFor="let item of ownerList" [value]="item">
+      {{ item.ownerName }}
+    </ion-select-option>
+  </ion-select>
+  <p *ngIf="this.driverRegisterForm.get('ownerName')?.invalid && this.driverRegisterForm.get('ownerName')?.touched" class="text-red-600 text-xs mt-1">
+    Please select a Owner Name.
+  </p>
+</div>
     <div>
       <label class="block text-sm font-medium text-gray-700"
         >Driver Phone Number *</label

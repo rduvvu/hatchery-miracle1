@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
+import { ApiServiceService } from '../services/api-service.service';
+import { apis } from 'src/app/services/apis';
 
 @Component({
   selector: 'app-owner-register',
@@ -9,14 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class OwnerRegisterPage implements OnInit {
   ownerRegisterForm!: FormGroup;
-vehicleNumbers: string[] = [
-  'AP31AB1234',
-  'TS09CA4321',
-  'KA05MK6789',
-  'MH12XY9876',
-  'DL3CAF5030'
-];
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private router: Router, private apiService: ApiServiceService,private toastController: ToastController) {}
 
   ngOnInit() {
     this.ownerRegisterForm = this.fb.group({
@@ -30,9 +27,24 @@ vehicleNumbers: string[] = [
   registerOwner() {
     if (this.ownerRegisterForm.valid) {
       const formData = this.ownerRegisterForm.value;
-      console.log('Owner Registration Data:', formData);
-      // TODO: Send this data to your API
+      const reqBody = {
+    "ownerName": formData.ownerName,
+    "phoneNumber": formData.phoneNumber,
+    "vehicleNumber": formData.vehicleNumber,
+    "hatcheryId": 1,
+    "role": "OWNER",
+    "password": formData.password
     }
+          console.log('Request Body:', reqBody);
+          this.apiService.postApi(`${apis.ownerRegister}`, reqBody).subscribe((response) => {
+            if (response.success === true) {
+               this.presentToast('Owner Registration successful!', 'success');
+              this.router.navigate(['/owner-login']);
+            } else {
+                 this.presentToast("Failed To Register!","danger")
+            }
+          })
+  }
   }
 
   onInputLimit(event: any, field: string) {
@@ -46,4 +58,13 @@ vehicleNumbers: string[] = [
     const input = event.target.value.replace(/\D/g, '');
     this.ownerRegisterForm.get('phoneNumber')?.setValue(input);
   }
+  async presentToast(message: string, color: string = 'success') {
+  const toast = await this.toastController.create({
+    message,
+    duration: 3000,           // visible for 3 seconds
+    color,                    // 'success', 'danger', 'warning', etc.
+    position: 'bottom'
+  });
+  await toast.present();
+}
 }
