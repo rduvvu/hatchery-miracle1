@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: 'login',
     loadChildren: () => import('./login/login/login.module').then(m => m.LoginPageModule)
@@ -30,14 +30,19 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
-  },  {
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./Home/pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
     path: 'round-details',
     loadChildren: () => import('./Home/pages/round-details/round-details.module').then( m => m.RoundDetailsPageModule)
+  },  {
+    path: 'owner-register',
+    loadChildren: () => import('./owner-register/owner-register.module').then( m => m.OwnerRegisterPageModule)
   }
+
 
 
 
