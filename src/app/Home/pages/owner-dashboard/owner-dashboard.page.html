@@ -50,17 +50,17 @@
     <div id="checkin-accordion-content" *ngIf="checkinAccordionOpen" class="px-4 pb-4">
       <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-2">
         <button
-        [ngClass]="driverStatusDetails.availableCount !== driverStatusDetails.totalDrivers ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-green-700 text-white px-4 py-2 rounded'"
+        [ngClass]="!enableCompleteRoundButton ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-green-700 text-white px-4 py-2 rounded'"
           (click)="startNewRound()"
-          [disabled]=" !enableCompleteRoundButton "
+          [disabled]="!enableCompleteRoundButton"
           >
           Start New Check-in Round
         </button>
 
         <button
-          [ngClass]="enableCompleteRoundButton  ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-[#0d416b] text-white px-4 py-2 rounded'"
+          [ngClass]=" !disableNewRoundButton  ? 'bg-gray-300 text-black px-4 py-2 rounded' : 'bg-[#0d416b] text-white px-4 py-2 rounded'"
           (click)="completeCurrentRound()"
-          [disabled]="enableCompleteRoundButton"
+          [disabled]="!disableNewRoundButton"
         >
           Complete Current Round
         </button>

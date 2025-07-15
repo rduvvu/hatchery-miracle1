@@ -18,9 +18,9 @@ export class OwnerDashboardPage implements OnInit {
   completedDriversList: any[] = [];
   roundsCompletedList: any[] = [];
   activeTab: 'available' | 'checkedIn' | 'completed' = 'available';
-  disableNewRoundButton = false;
   moveToDriverCheckin = false;
-  enableCompleteRoundButton: boolean=false;
+  disableNewRoundButton = false;
+  enableCompleteRoundButton: boolean = false;
 
   constructor(
     private router: Router,
@@ -61,6 +61,8 @@ export class OwnerDashboardPage implements OnInit {
               (d: any) => d.status === 'Check-In'
             );
           this.roundsCompletedList = this.driverStatusDetails.roundSummary;
+          this.enableCompleteRoundButton = this.driverStatusDetails.currentRound === true? true : false;
+          this.disableNewRoundButton = this.driverStatusDetails.completedRound === true? true : false;
         }
       },
       error: (err: any) => {
@@ -101,7 +103,7 @@ export class OwnerDashboardPage implements OnInit {
 
   startNewRound(){
     //console.log(this.availableDriversList, 'Available Drivers List');
-    if(this.availableDriversList.length === 0) {
+    if(this.availableDriversList.length !== 0) {
     const userId = sessionStorage.getItem('userId');
     const url = `${apis.newRound}?ownerId=${userId}`;
     this.apiService.postApi(url, {}).subscribe({
@@ -118,7 +120,13 @@ export class OwnerDashboardPage implements OnInit {
             this.presentToast(res.message, 'danger');
             } else {
             this.presentToast('New round started successfully!', 'success');
+            if(res.success === true) {
             this.enableCompleteRoundButton = true;
+            this.disableNewRoundButton = true;
+            }else{
+               this.enableCompleteRoundButton = false;
+            this.disableNewRoundButton = false;
+            }
             this.getDriversStatusDetails();
             }
         }
@@ -130,7 +138,6 @@ export class OwnerDashboardPage implements OnInit {
     }
     if(this.availableDriversList.length !== 0) {
       this.moveToDriverCheckin = true;
-      this.disableNewRoundButton = true;
       sessionStorage.setItem("moveToDriverCheckin", this.moveToDriverCheckin.toString());
       this.router.navigate(['/tabs/checkin']);
       //this.presentToast('No drivers available for a new round', 'warning');
@@ -159,7 +166,8 @@ export class OwnerDashboardPage implements OnInit {
             this.presentToast(res.message, 'danger');
             } else {
             this.presentToast('Successfully updated completed round!', 'success');
-            this.enableCompleteRoundButton = false;
+            this.disableNewRoundButton = false;
+            this.enableCompleteRoundButton = true;
             this.getDriversStatusDetails();
             }
 
