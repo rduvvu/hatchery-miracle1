@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ApiServiceService } from 'src/app/services/api-service.service';
 import { apis } from 'src/app/services/apis';
 import { ToastController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 @Component({
   selector: 'app-owner-dashboard',
   templateUrl: './owner-dashboard.page.html',
@@ -25,7 +26,8 @@ export class OwnerDashboardPage implements OnInit {
   constructor(
     private router: Router,
     public apiService: ApiServiceService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storage: Storage
   ) {}
 
   ngOnInit() {}
@@ -36,9 +38,10 @@ export class OwnerDashboardPage implements OnInit {
     // this.hasMoreData = true;
     this.getDriversStatusDetails();
   }
-  getDriversStatusDetails() {
+  async getDriversStatusDetails() {
     this.isSubmitting = true;
-    const userId = sessionStorage.getItem('userId');
+    const userId = await this.storage.get('userId')
+    console.log(userId);
     const url = `${apis.driversStatusDetails}?ownerId=${userId}`;
 
     this.apiService.getApi(url).subscribe({

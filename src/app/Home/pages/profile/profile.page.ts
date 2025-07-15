@@ -21,7 +21,7 @@ export class ProfilePage implements OnInit {
   }
 
    logout() {
-    this.router.navigate(['/owner-login']);
+    this.router.navigate(['/login']);
     sessionStorage.clear();
     this.storage.clear();
   }

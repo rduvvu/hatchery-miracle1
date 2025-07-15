@@ -33,6 +33,8 @@ export class OwnerLoginPage implements OnInit {
         sessionStorage.setItem("userId", response.userId);
         sessionStorage.setItem("userInfo", JSON.stringify(response));
         await this.storage.set('isLoggedIn', true);
+        await this.storage.set("userId", response.userId);
+        await this.storage.set("userInfo", JSON.stringify(response));
         this.presentToast("Login successful!","success")
         this.router.navigate(['/tabs']);
       } else {

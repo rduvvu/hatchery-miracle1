@@ -20,6 +20,7 @@ export class AppComponent {
       .subscribe((event: NavigationEnd) => {
         this.path = event.urlAfterRedirects;
       });
+      this.initializeApp();
     // this.platform.ready().then(() => {
     //   // Set keyboard mode to resize the body, so content moves up
     //   Keyboard.setResizeMode({ mode: KeyboardResize.Body });
@@ -30,9 +31,11 @@ export class AppComponent {
   await this.platform.ready();
   await this.storage.create();
   const isLoggedIn = await this.storage.get('isLoggedIn');
-
+  console.log(isLoggedIn);
+   const userId = await this.storage.get('userId')
+    console.log(userId);
   if (isLoggedIn) {
-    this.router.navigate(['/owner-dashboard']); // or your dashboard page
+    this.router.navigate(['/tabs']); // or your dashboard page
   } else {
     this.router.navigate(['/login']);
   }
