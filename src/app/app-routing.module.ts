@@ -38,7 +38,11 @@ const routes: Routes = [
   {
     path: 'round-details',
     loadChildren: () => import('./Home/pages/round-details/round-details.module').then( m => m.RoundDetailsPageModule)
+  },  {
+    path: 'owner-register',
+    loadChildren: () => import('./owner-register/owner-register.module').then( m => m.OwnerRegisterPageModule)
   }
+
 
 
 
