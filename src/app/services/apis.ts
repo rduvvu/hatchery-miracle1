@@ -1,5 +1,4 @@
-const baseUrl = 'http://172.17.12.101:8083/hatchery'
-//const devUrl1 = 'http://13.216.66.214:8080/nafarm-authentication'
+const baseUrl = 'http://52.4.57.247:8080/hatchery'
 export const apis = {
   //authentication
   ownerLogin: baseUrl + '/users/login',
