@@ -41,7 +41,7 @@ export class OwnerDashboardPage implements OnInit {
   async getDriversStatusDetails() {
     this.isSubmitting = true;
     const userId = await this.storage.get('userId')
-    console.log(userId);
+    //console.log(userId);
     const url = `${apis.driversStatusDetails}?ownerId=${userId}`;
 
     this.apiService.getApi(url).subscribe({
@@ -106,9 +106,10 @@ export class OwnerDashboardPage implements OnInit {
 
   startNewRound(){
     //console.log(this.availableDriversList, 'Available Drivers List');
+
     if(this.availableDriversList.length !== 0) {
     const userId = sessionStorage.getItem('userId');
-    const url = `${apis.newRound}?ownerId=${userId}`;
+    const url = `${apis.newRound}?ownerId=${userId}`
     this.apiService.postApi(url, {}).subscribe({
       next: (res: any) => {
         this.isSubmitting = false;
@@ -126,9 +127,13 @@ export class OwnerDashboardPage implements OnInit {
             if(res.success === true) {
             this.enableCompleteRoundButton = true;
             this.disableNewRoundButton = true;
+            this.moveToDriverCheckin = false;
+            sessionStorage.setItem('moveToDriverCheckin',this.moveToDriverCheckin.toString());
             }else{
                this.enableCompleteRoundButton = false;
             this.disableNewRoundButton = false;
+             this.moveToDriverCheckin = true;
+            sessionStorage.setItem('moveToDriverCheckin',this.moveToDriverCheckin.toString());
             }
             this.getDriversStatusDetails();
             }
@@ -140,8 +145,6 @@ export class OwnerDashboardPage implements OnInit {
     });
     }
     if(this.availableDriversList.length !== 0) {
-      this.moveToDriverCheckin = true;
-      sessionStorage.setItem("moveToDriverCheckin", this.moveToDriverCheckin.toString());
       this.router.navigate(['/tabs/checkin']);
       //this.presentToast('No drivers available for a new round', 'warning');
      // return;
@@ -154,6 +157,8 @@ export class OwnerDashboardPage implements OnInit {
 
   completeCurrentRound(){
     const userId = sessionStorage.getItem('userId');
+    const checkinBoolean = sessionStorage.getItem('moveToDriverCheckin');
+
     const url = `${apis.completeCurrentRound}?ownerId=${userId}&round=${this.driverStatusDetails.latestRound}&flag=true`;
     this.apiService.putApi(url, {}).subscribe({
       next: (res: any) => {
@@ -171,6 +176,8 @@ export class OwnerDashboardPage implements OnInit {
             this.presentToast('Successfully updated completed round!', 'success');
             this.disableNewRoundButton = false;
             this.enableCompleteRoundButton = true;
+            sessionStorage.setItem('moveToDriverCheckin', 'true');
+            this.moveToDriverCheckin = true;
             this.getDriversStatusDetails();
             }
 
